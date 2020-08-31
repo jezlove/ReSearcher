@@ -31,8 +31,6 @@ namespace ReSearcher {
 		private readonly CheckBox regexSinglelineCheckBox;
 		private readonly CheckBox regexIgnorePatternWhitespaceCheckBox;
 
-		private static readonly Font monospaceFont = new Font("Consolas", 9);
-
 		private SearchForm() {
 			Text = "Search...";
 			FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -45,13 +43,13 @@ namespace ReSearcher {
 				new Panel() { Dock = DockStyle.Fill }.withControls(
 					tabControl = new TabControl() { Dock = DockStyle.Fill, Padding = new Point(24, 4) }.withControls(
 						new TabPage() { Text = "Simple", Padding = tabPagePadding }.withControls(
-							simplePatternTextBox = new TextBox() { Dock = DockStyle.Fill, Font = monospaceFont, Multiline = true, AcceptsReturn = true, ScrollBars = ScrollBars.Vertical }
+							simplePatternTextBox = new TextBox() { Dock = DockStyle.Fill, Font = Fonts.monospace, Multiline = true, AcceptsReturn = true, ScrollBars = ScrollBars.Vertical }
 						),
 						new TabPage() { Text = "Boolean", Padding = tabPagePadding }.withControls(
-							booleanPatternTextBox = new TextBox() { Dock = DockStyle.Fill, Font = monospaceFont, Multiline = true, AcceptsReturn = true, ScrollBars = ScrollBars.Vertical }
+							booleanPatternTextBox = new TextBox() { Dock = DockStyle.Fill, Font = Fonts.monospace, Multiline = true, AcceptsReturn = true, ScrollBars = ScrollBars.Vertical }
 						),
 						new TabPage() { Text = "Regex", Padding = tabPagePadding }.withControls(
-							regexPatternTextBox = new TextBox() { Dock = DockStyle.Fill, Font = monospaceFont, Multiline = true, WordWrap = false, AcceptsReturn = true, ScrollBars = ScrollBars.Both },
+							regexPatternTextBox = new TextBox() { Dock = DockStyle.Fill, Font = Fonts.monospace, Multiline = true, WordWrap = false, AcceptsReturn = true, ScrollBars = ScrollBars.Both },
 							new FlowLayoutPanel() { Dock = DockStyle.Bottom, Height = 30, FlowDirection = FlowDirection.RightToLeft }.withControls(
 								regexIgnorePatternWhitespaceCheckBox = new CheckBox() { Text = "'x' - ignore whitespace", AutoSize = true, Checked = true },
 								regexMultilineCheckBox = new CheckBox() { Text = "'m' - multiline", AutoSize = true },
@@ -63,11 +61,11 @@ namespace ReSearcher {
 					)
 				),
 				new GroupBox() { Text = "XPath (within Epub only):", Dock = DockStyle.Top, Height = 100, Padding = new Padding(16) }.withControls(
-					xpathTextBox = new TextBox() { Multiline = true, WordWrap = false, AcceptsReturn = true, ScrollBars = ScrollBars.Both, Dock = DockStyle.Fill, Font = monospaceFont }
+					xpathTextBox = new TextBox() { Multiline = true, WordWrap = false, AcceptsReturn = true, ScrollBars = ScrollBars.Both, Dock = DockStyle.Fill, Font = Fonts.monospace }
 				),
 				new GroupBox() { Text = "Path(s) and filter:", Dock = DockStyle.Top, Height = 200, Padding = new Padding(16) }.withControls(
-					pathsTextBox = new TextBox() { Multiline = true, WordWrap = false, AcceptsReturn = true, ScrollBars = ScrollBars.Both, Dock = DockStyle.Fill, Font = monospaceFont },
-					filterComboBox = new ComboBox() { Dock = DockStyle.Right, Width = 80, Font = monospaceFont }
+					pathsTextBox = new TextBox() { Multiline = true, WordWrap = false, AcceptsReturn = true, ScrollBars = ScrollBars.Both, Dock = DockStyle.Fill, Font = Fonts.monospace },
+					filterComboBox = new ComboBox() { Dock = DockStyle.Right, Width = 80, Font = Fonts.monospace }
 				),
 				new Panel() { Dock = DockStyle.Bottom, Height = 30, Padding = new Padding(0, 4, 0, 0) }.withControls(
 					new Button() { Text = "Load...", Dock = DockStyle.Left }.withAction(loadPreviousSearch),

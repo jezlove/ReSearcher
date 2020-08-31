@@ -22,16 +22,14 @@ namespace ReSearcher {
 		protected ComboBox filterComboBox { get; private set; }
 		protected DirectoryView directoryView { get; private set; }
 
-		private static readonly Font monospaceFont = new Font("Consolas", 9);
-
 		public BrowsePage() {
 			Padding = new Padding(8);
 			this.appendControls(
-				directoryView = new DirectoryView() { Dock = DockStyle.Fill, Margin = new Padding(4), Font = monospaceFont },
+				directoryView = new DirectoryView() { Dock = DockStyle.Fill, Margin = new Padding(4), Font = Fonts.monospace },
 				new Panel() { Dock = DockStyle.Top, Margin = new Padding(4), Height = 30 }.withControls(
 					new Panel() { Dock = DockStyle.Top, Margin = new Padding(4), Height = 30 }.withControls(
-						directoryPathTextBox = new TextBox() { Dock = DockStyle.Fill, Font = monospaceFont },
-						filterComboBox = new ComboBox() { Dock = DockStyle.Right, Width = 80, Font = monospaceFont }
+						directoryPathTextBox = new TextBox() { Dock = DockStyle.Fill, Font = Fonts.monospace },
+						filterComboBox = new ComboBox() { Dock = DockStyle.Right, Width = 80, Font = Fonts.monospace }
 					)
 				)
 			);

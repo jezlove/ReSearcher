@@ -26,6 +26,15 @@ namespace ReSearcher {
 
 		#endregion
 
+		#region help
+
+			public static TControl withHelpPopup<TControl>(this TControl thisControl, String message) where TControl : Control {
+				thisControl.HelpRequested += new HelpEventHandler((s, a) => { Help.ShowPopup(thisControl, message, a.MousePos); });
+				return(thisControl);
+			}
+
+		#endregion
+
 	}
 
 }

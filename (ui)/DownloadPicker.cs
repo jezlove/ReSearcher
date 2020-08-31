@@ -23,7 +23,7 @@ namespace ReSearcher {
 
 		private DownloadPicker(IEnumerable<KeyValuePair<String, List<IDownloadableResourceFile>>> downloadMappings) {
 
-			Text = "Downloads...";
+			Text = "Available downloads";
 			StartPosition = FormStartPosition.CenterParent;
 			Size = new Size(
 				(int)(Screen.PrimaryScreen.Bounds.Width * 0.7f),

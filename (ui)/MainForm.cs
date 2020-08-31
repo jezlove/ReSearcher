@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Reflection;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Drawing;
@@ -63,13 +64,16 @@ namespace ReSearcher {
 						new ToolStripSeparator(),
 						new ToolStripMenuItem() { Text = "Download..." }.withAction(download),
 						new ToolStripSeparator(),
+						new ToolStripMenuItem() { Text = "Settings" }.withAction(showSettings),
+						new ToolStripSeparator(),
 						new ToolStripMenuItem() { Text = "Quit" }.withAction(quit)
 					),
 					new ToolStripMenuItem() { Text = "Tab" }.withDropDownItems(
 						new ToolStripMenuItem() { Text = "Close" }.withAction(closeSelectedTab)
 					),
 					new ToolStripMenuItem() { Text = "Help" }.withDropDownItems(
-						new ToolStripMenuItem() { Text = "About..." }.withAction(about)
+						new ToolStripMenuItem() { Text = "Index" }.withAction(showHelpIndex),
+						new ToolStripMenuItem() { Text = "About" }.withAction(showHelpAbout)
 					)
 				)
 			);
@@ -249,12 +253,26 @@ namespace ReSearcher {
 			}
 		}
 
-		public void quit() {
-			Dispose();
+		public void showSettings() {
+			using(SettingsForm settingsForm = new SettingsForm()) {
+				settingsForm.ShowDialog();
+			}
 		}
 
-		public void about() {
+		public void showHelpIndex() {
+			String chmFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "ReSearcher.chm");
+			if(!File.Exists(chmFilePath)) {
+				this.error("Could not locate help file: " + chmFilePath);
+			}
+			Help.ShowHelpIndex(this, chmFilePath);
+		}
+
+		public void showHelpAbout() {
 			this.inform("ReSearcher is a tool for searching through course materials using regular expressions.", "About");
+		}
+
+		public void quit() {
+			Dispose();
 		}
 
 	}

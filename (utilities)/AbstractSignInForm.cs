@@ -36,10 +36,12 @@ namespace ReSearcher {
 		protected AbstractSignInForm() {
 
 			Text = "Sign in";
-			StartPosition = FormStartPosition.CenterParent;
 			ClientSize = new Size(350, 180);
+			StartPosition = FormStartPosition.CenterParent;
 			FormBorderStyle = FormBorderStyle.FixedDialog;
 			ShowInTaskbar = false;
+			MinimizeBox = false;
+			MaximizeBox = false;
 
 			// assemble UI components
 			// extension methods are in use here to provide a fluent and elegant component hierarchy
