@@ -72,7 +72,11 @@ namespace ReSearcher {
 						new ToolStripMenuItem() { Text = "Close" }.withAction(closeSelectedTab)
 					),
 					new ToolStripMenuItem() { Text = "Help" }.withDropDownItems(
-						new ToolStripMenuItem() { Text = "Index" }.withAction(showHelpIndex),
+						new ToolStripMenuItem() { Text = "Help table of contents" }.withAction(showHelp),
+						new ToolStripMenuItem() { Text = "Help index" }.withAction(showHelpIndex),
+						new ToolStripSeparator(),
+						new ToolStripMenuItem() { Text = "Help online" }.withAction(showHelpOnline),
+						new ToolStripSeparator(),
 						new ToolStripMenuItem() { Text = "About" }.withAction(showHelpAbout)
 					)
 				)
@@ -259,12 +263,31 @@ namespace ReSearcher {
 			}
 		}
 
+		public void showHelp() {
+			String chmFilePath = getHelpFilePath();
+			if(!File.Exists(chmFilePath)) {
+				this.error("Could not locate help file: " + chmFilePath);
+			}
+			Help.ShowHelp(this, chmFilePath);
+		}
+
 		public void showHelpIndex() {
-			String chmFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "ReSearcher.chm");
+			String chmFilePath = getHelpFilePath();
 			if(!File.Exists(chmFilePath)) {
 				this.error("Could not locate help file: " + chmFilePath);
 			}
 			Help.ShowHelpIndex(this, chmFilePath);
+		}
+
+		internal static String getHelpFilePath() {
+			return(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "ReSearcher.chm"));
+		}
+
+		public void showHelpOnline() {
+			ProcessStartInfo processStartInfo = new ProcessStartInfo();
+			processStartInfo.UseShellExecute = true;
+			processStartInfo.FileName = "http://help.jezlove.com/ReSearcher/";
+			Process.Start(processStartInfo);
 		}
 
 		public void showHelpAbout() {

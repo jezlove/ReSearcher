@@ -27,6 +27,16 @@ namespace ReSearcher {
 				return(thisKeyValueConfigurationCollection);
 			}
 
+			public static KeyValueConfigurationCollection take(this KeyValueConfigurationCollection thisKeyValueConfigurationCollection, String key, out String value, String defaultValue) {
+				value = thisKeyValueConfigurationCollection.getValueOrNull(key) ?? defaultValue;
+				return(thisKeyValueConfigurationCollection);
+			}
+
+			public static KeyValueConfigurationCollection take(this KeyValueConfigurationCollection thisKeyValueConfigurationCollection, String key, out String value, Func<String> defaultValueProvider) {
+				value = thisKeyValueConfigurationCollection.getValueOrNull(key) ?? defaultValueProvider();
+				return(thisKeyValueConfigurationCollection);
+			}
+
 		#endregion
 
 		#region putting
