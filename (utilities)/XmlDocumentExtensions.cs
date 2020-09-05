@@ -15,12 +15,14 @@ namespace ReSearcher {
 
 		[Conditional("DEBUG")]
 		public static void preserve(this XmlDocument thisXmlDocument, String xmlFileName) {
+/*
 			String directoryPath = "cache";
 			if(!Directory.Exists(directoryPath)) {
 				Directory.CreateDirectory(directoryPath);
 			}
 			String xmlFilePath = Path.Combine(directoryPath, xmlFileName);
 			thisXmlDocument.Save(xmlFilePath);
+*/
 		}
 
 	}

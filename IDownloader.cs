@@ -14,7 +14,7 @@ namespace ReSearcher {
 
 		IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections();
 
-		void download(IDownloadableResourceFile downloadableResourceFile, String filePath);
+		Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath);
 
 	}
 

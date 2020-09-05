@@ -27,9 +27,10 @@ namespace ReSearcher {
 			return(base.enumerateResourceFileCollections());
 		}
 
-		public override void download(IDownloadableResourceFile downloadableResourceFile, String filePath) {
-			base.download(downloadableResourceFile, filePath);
+		public override Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath) {
+			Boolean downloaded = base.download(downloadableResourceFile, filePath);
 			Thread.Sleep(downloadDuration);
+			return(downloaded);
 		}
 
 	}

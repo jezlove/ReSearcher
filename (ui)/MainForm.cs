@@ -118,26 +118,31 @@ namespace ReSearcher {
 			SearchDetailsRepository.commit(searchDetails);
 			String filter = (String.IsNullOrWhiteSpace(searchCriteria.filter)) ? Filters.any : searchCriteria.filter;
 			ISearcher searcher;
+			try {
 
 #if USE_MOCK_SEARCHER
 
-			searcher = new SleepyMockSearcher(filter);
+				searcher = new SleepyMockSearcher(filter);
 
 #else
 
-			if(null == searchCriteria.xpath) {
-				searcher = new UnsophisticatedSearcher(searchCriteria.regex, filter);
-			}
-			else {
-				searcher = new SophisticatedSearcher(searchCriteria.regex, searchCriteria.xpath, filter);
-			}
+				if(null == searchCriteria.xpath) {
+					searcher = new UnsophisticatedSearcher(searchCriteria.regex, filter);
+				}
+				else {
+					searcher = new SophisticatedSearcher(searchCriteria.regex, searchCriteria.xpath, filter);
+				}
 
 #endif
 
-			searchWith(searcher, searchCriteria);
+				searchWith(searcher, searchCriteria);
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}
 		}
 
-		public void searchWith(ISearcher searcher, SearchCriteria searchCriteria) {
+		internal void searchWith(ISearcher searcher, SearchCriteria searchCriteria) {
 
 			ISearchResult iSearchResult = null;
 			IndefiniteProcessingForm.process(
@@ -170,38 +175,53 @@ namespace ReSearcher {
 		}
 
 		public void browse(String directoryPath) {
-			BrowsePage browsePage = new BrowsePage(directoryPath);
-			tabControl.appendControls(browsePage);
-			tabControl.SelectedTab = browsePage;
+			try {
+				BrowsePage browsePage = new BrowsePage(directoryPath);
+				tabControl.appendControls(browsePage);
+				tabControl.SelectedTab = browsePage;
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}			
 		}
 
 		public void open() {
-			foreach(FileSystemInfo fileSystemInfo in getSelectedFileSystemInfosOrCurrentDirectoryOrEmpty()) {
-				Process.Start(fileSystemInfo.FullName);
+			try {
+				foreach(FileSystemInfo fileSystemInfo in getSelectedFileSystemInfosOrCurrentDirectoryOrEmpty()) {
+					Process.Start(fileSystemInfo.FullName);
+				}
 			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}	
 		}
 
 		public void download() {
+			try {
 
 #if USE_MOCK_DOWNLOADER
 
-			downloadAllNotDownloadedWith(new SleepyMockDownloader(MockDownloadData.load()), ProgramSettings.downloadsDirectoryPath);
+				downloadAllNotDownloadedWith(new SleepyMockDownloader(MockDownloadData.load()), ProgramSettings.downloadsDirectoryPath);
 
 #else
 
-			OuSignedInWebSession ouSignedInWebSession = OuSignInForm.signIn(this);
-			if(null == ouSignedInWebSession) {
-				return;
-			}
-			using(ouSignedInWebSession) {
-				downloadAllNotDownloadedWith(new OuDownloader(ouSignedInWebSession), ProgramSettings.downloadsDirectoryPath);
-			}
+				OuSignedInWebSession ouSignedInWebSession = OuSignInForm.signIn(this);
+				if(null == ouSignedInWebSession) {
+					return;
+				}
+				using(ouSignedInWebSession) {
+					downloadAllNotDownloadedWith(new OuDownloader(ouSignedInWebSession), ProgramSettings.downloadsDirectoryPath);
+				}
 
 #endif
 
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}	
 		}
 
-		public void downloadAllNotDownloadedWith(IDownloader downloader, String downloadsDirectoryPath) {
+		internal void downloadAllNotDownloadedWith(IDownloader downloader, String downloadsDirectoryPath) {
 
 			IEnumerable<IDownloadableResourceFileCollection> available = null;
 			IndefiniteProcessingForm.process(
@@ -241,7 +261,14 @@ namespace ReSearcher {
 					log.WriteLine("Downloading: \"{0}\"", downloadableResourceFile.name);
 					FileInfo fileInfo = new FileInfo(Path.Combine(downloadsDirectoryPath, relativeFilePath));
 					fileInfo.Directory.Create();
-					downloader.download(downloadableResourceFile, fileInfo.FullName);
+					if(!downloader.download(downloadableResourceFile, fileInfo.FullName)) {
+						Console.Error.WriteLine("Downloading of uri: {0} failed", downloadableResourceFile);
+						if(fileInfo.Exists) {
+							Console.Error.WriteLine("Deleting partially downloaded file: {0}", fileInfo.FullName);
+							fileInfo.Delete();
+						}
+						return(-1);
+					}
 					downloadedByteCount += downloadableResourceFile.size;
 					return((int)(Math.Ceiling((Double)(downloadedByteCount) / (Double)(totalByteCount) * 100d)));
 				},
@@ -252,31 +279,51 @@ namespace ReSearcher {
 		}
 
 		public void closeSelectedTab() {
-			if(null != tabControl.SelectedTab) {
-				tabControl.TabPages.Remove(tabControl.SelectedTab);
+			try {
+				if(null != tabControl.SelectedTab) {
+					tabControl.TabPages.Remove(tabControl.SelectedTab);
+				}
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
 			}
 		}
 
 		public void showSettings() {
-			using(SettingsForm settingsForm = new SettingsForm()) {
-				settingsForm.ShowDialog();
+			try {
+				using(SettingsForm settingsForm = new SettingsForm()) {
+					settingsForm.ShowDialog();
+				}
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
 			}
 		}
 
 		public void showHelp() {
-			String chmFilePath = getHelpFilePath();
-			if(!File.Exists(chmFilePath)) {
-				this.error("Could not locate help file: " + chmFilePath);
+			try {
+				String chmFilePath = getHelpFilePath();
+				if(!File.Exists(chmFilePath)) {
+					this.error("Could not locate help file: " + chmFilePath);
+				}
+				Help.ShowHelp(this, chmFilePath);
 			}
-			Help.ShowHelp(this, chmFilePath);
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}
 		}
 
 		public void showHelpIndex() {
-			String chmFilePath = getHelpFilePath();
-			if(!File.Exists(chmFilePath)) {
-				this.error("Could not locate help file: " + chmFilePath);
+			try {
+				String chmFilePath = getHelpFilePath();
+				if(!File.Exists(chmFilePath)) {
+					this.error("Could not locate help file: " + chmFilePath);
+				}
+				Help.ShowHelpIndex(this, chmFilePath);
 			}
-			Help.ShowHelpIndex(this, chmFilePath);
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}
 		}
 
 		internal static String getHelpFilePath() {
@@ -284,10 +331,15 @@ namespace ReSearcher {
 		}
 
 		public void showHelpOnline() {
-			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.UseShellExecute = true;
-			processStartInfo.FileName = "http://help.jezlove.com/ReSearcher/";
-			Process.Start(processStartInfo);
+			try {
+				ProcessStartInfo processStartInfo = new ProcessStartInfo();
+				processStartInfo.UseShellExecute = true;
+				processStartInfo.FileName = "http://help.jezlove.com/ReSearcher/";
+				Process.Start(processStartInfo);
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}
 		}
 
 		public void showHelpAbout() {
@@ -295,7 +347,12 @@ namespace ReSearcher {
 		}
 
 		public void quit() {
-			Dispose();
+			try {
+				Dispose();
+			}
+			catch(Exception exception) {
+				this.error(String.Format("An error occured, exception: {0}", exception));
+			}
 		}
 
 	}

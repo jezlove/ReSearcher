@@ -90,7 +90,7 @@ namespace ReSearcher {
 					new Button() { Text = "...", Dock = DockStyle.Right }.withAction(() => { browseForDirectoryPathToUpdate(startingDirectoryPathTextBox); })
 				),
 				new GroupBox() { Text = "Download to:", Dock = DockStyle.Top, Height = 70, Padding = new Padding(16) }.withControls(
-					downloadsDirectoryPathTextBox = new TextBox() { Dock = DockStyle.Fill, Font = Fonts.monospace, Text = ProgramSettings.startingDirectoryPath },
+					downloadsDirectoryPathTextBox = new TextBox() { Dock = DockStyle.Fill, Font = Fonts.monospace, Text = ProgramSettings.downloadsDirectoryPath },
 					new Button() { Text = "...", Dock = DockStyle.Right }.withAction(() => { browseForDirectoryPathToUpdate(downloadsDirectoryPathTextBox); })
 				),
 				new Panel() { Dock = DockStyle.Bottom, Height = 30, Padding = new Padding(0, 4, 0, 0) }.withControls(

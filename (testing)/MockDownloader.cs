@@ -25,9 +25,10 @@ namespace ReSearcher {
 			return(downloadableResourceFileCollections);
 		}
 
-		public virtual void download(IDownloadableResourceFile downloadableResourceFile, String filePath) {
+		public virtual Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath) {
 			Debug.WriteLine("Downloading: {0} to {1}", downloadableResourceFile.downloadUri, filePath);
 			using(File.Create(filePath)) {}
+			return(true);
 		}
 
 	}

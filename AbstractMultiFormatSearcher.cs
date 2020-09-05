@@ -103,15 +103,21 @@ namespace ReSearcher {
 			}
 
 			protected WordFileSearchResults searchWordFileUsingOpenXmlApi(FileInfo wordFileInfo) {
-				using(WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(wordFileInfo.FullName, isEditable: false)) {
-					using(StreamReader streamReader = new StreamReader(wordprocessingDocument.MainDocumentPart.GetStream())) {
-						String text = streamReader.ReadToEnd();
-						MatchCollection matchCollection = regex.Matches(text);
-						if(0 == matchCollection.Count) {
-							return(null);
+				try {
+					using(WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(wordFileInfo.FullName, isEditable: false)) {
+						using(StreamReader streamReader = new StreamReader(wordprocessingDocument.MainDocumentPart.GetStream())) {
+							String text = streamReader.ReadToEnd();
+							MatchCollection matchCollection = regex.Matches(text);
+							if(0 == matchCollection.Count) {
+								return(null);
+							}
+							return(new WordFileSearchResults(wordFileInfo, new RegexSearchResultMatchCollection(matchCollection)));
 						}
-						return(new WordFileSearchResults(wordFileInfo, new RegexSearchResultMatchCollection(matchCollection)));
 					}
+				}
+				catch(Exception exception) {
+					Console.Error.WriteLine("Error: exception: {0}", exception);
+					return(null);
 				}
 			}
 
@@ -178,6 +184,7 @@ namespace ReSearcher {
 					int pageCount = pdfReader.NumberOfPages;
 					PdfLinearTextExtractionStrategy pdfLinearTextExtractionStrategy = new PdfLinearTextExtractionStrategy();
 					for(int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+						pdfLinearTextExtractionStrategy.lines.Clear();
 						iTextSharp.text.pdf.parser.PdfTextExtractor.GetTextFromPage(pdfReader, pageNumber, pdfLinearTextExtractionStrategy);
 						String text = String.Join(Environment.NewLine, pdfLinearTextExtractionStrategy.lines);
 						MatchCollection matchCollection = regex.Matches(text);
