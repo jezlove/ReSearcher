@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>Regular expressions</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>Regular expressions</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>Regular expressions, (sometimes referred to as Regex or even RegExp) are a great way of expressing complex rules in order to find information more quickly and with a higher degree of selectivity.</span>
+      </p>
+      <p>
+        <span>Because this is a broad and complicated topic, I will not be elaborating in any detail on how to use regular expressions as it has been already better explained online.</span>
+        <span>See: <a target="_blank" href="https://www.regular-expressions.info/">https://www.regular-expressions.info/</a>, in particularly: <a target="_blank" href="https://www.regular-expressions.info/quickstart.html">https://www.regular-expressions.info/quickstart.html</a>.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> when browsing external sources for information regarding regular expressions make sure that you only use constructs that are supported by the .Net Framework regex engine.</span>
+          <span>See <a href="#dotNetRegexEngineSection">.Net regex engine</a> below for more details.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="dotNetRegexEngineSection">
+      <h2>
+        <span>.Net regex engine</span>
+      </h2>
+      <p>
+        <span>Regexes come in a multitude of different flavours with varying rules all dictated by which Regular Expression engine is being used.</span>
+        <span>ReSearcher uses the regex engine provided by the .Net Framework.</span>
+        <span>More information on the specifics of this engine can be found at: <a target="_blank" href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions">https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions</a></span>
+      </p>
+    </div>
+    <div class="section" id="lessExpressivitySection">
+      <h2>
+        <span>Less expressivity</span>
+      </h2>
+      <p>
+        <span>For simpler searches (but with less control), consider using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../BooleanExpressions/BooleanExpressions.htm">Boolean expressions</a>
+          </span>
+        </li>
+        <li>
+          <span>
+            <a href="../SimpleExpressions/SimpleExpressions.htm">Simple expressions</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="section" id="moreExpressivitySection">
+      <h2>
+        <span>More expressivity</span>
+      </h2>
+      <p>
+        <span>If searching within an EPUB document, consider also using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../XPathExpressions/XPathExpressions.htm">XPath expressions</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

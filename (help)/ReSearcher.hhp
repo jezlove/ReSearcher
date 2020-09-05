@@ -1,0 +1,51 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Display compile progress=Yes
+Compiled file=D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\ReSearcher.chm
+Enhanced decompilation=Yes
+Error log file=D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\ReSearcher.log
+
+Contents file=D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\ReSearcher.hhc
+Binary TOC=Yes
+Auto Index=No
+Index file=D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\ReSearcher.hhk
+Default topic=D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\ReSearcher.htm
+Default Font=Arial,8,0
+Language=0x809 English (United Kingdom)
+
+[FILES]
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\ReSearcher.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Browsing\Browsing.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Browsing\OpeningDocuments.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Configuring.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Locations\Locations.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Locations\DownloadsLocation\DownloadsLocation.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Locations\StartingLocation\StartingLocation.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Viewers\Viewers.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Viewers\EpubViewer\EpubViewer.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Viewers\PdfViewer\PdfViewer.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Configuring\Viewers\WordViewer\WordViewer.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Downloading\Downloading.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Downloading\Step1_SigningIn.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Downloading\Step2_CheckingForDownloads.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Downloading\Step3_SelectingFilesToDownload.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Downloading\Step4_Downloading.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Searching.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Step1_SpecifyingCriteria.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Step2_ReviewingResults.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Step3_ViewingIndividualResults.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Expressions\Expressions.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Expressions\BooleanExpressions\BooleanExpressions.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Expressions\RegularExpressions\RegularExpressions.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Expressions\SimpleExpressions\SimpleExpressions.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Expressions\XpathExpressions\XpathExpressions.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Formats\Formats.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Formats\EpubFormat\EpubFormat.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Formats\PdfFormat\PdfFormat.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\Formats\WordFormat\WordFormat.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\History\History.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\History\RetrievingPastSearchCriteria.htm
+D:\JeremyLove\laboratory\composement\guide\ReSearcher\compilation\Searching\History\SearchHistoryFile.htm
+
+[INFOTYPES]
+

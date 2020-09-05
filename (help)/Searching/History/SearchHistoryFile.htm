@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>Search history file</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>Search history file</span>
+    </h1>
+    <div class="introduction">
+      <div class="caution">
+        <p>
+          <span>
+            <strong>Caution:</strong> this topic is intended only for advanced users.</span>
+        </p>
+        <p>
+          <span>This topic is provided solely so that you may backup this file for use again with this version of ReSearcher.</span>
+        </p>
+      </div>
+      <p>
+        <span>Your search history is saved to the file: <code>ReSearcher.json</code>, located in your <code>%userprofile%</code> directory.</span>
+        <span>The file is saved in JSON format, see the <a href="#formatSection">Format</a> section below for more details.</span>
+      </p>
+      <div class="caution">
+        <p>
+          <span>
+            <strong>Caution:</strong> making changes directly to the <code>ReSearcher.json</code> file could make the whole file unreadable if a mistake is made.</span>
+        </p>
+        <p>
+          <span>Editing by hand is not recommended.</span>
+        </p>
+      </div>
+      <p>
+        <span>For information on how to retrieve past search criteria normally, see <a href="RetrievingPastSearchCriteria.htm">Retrieving past search criteria</a>.</span>
+      </p>
+    </div>
+    <div class="section" id="formatSection">
+      <h2>
+        <span>Format</span>
+      </h2>
+      <div class="caution">
+        <p>
+          <span>
+            <strong>Caution:</strong> this format is subject to change at any time and is accurate only for this version of ReSearcher.</span>
+        </p>
+      </div>
+      <p>
+        <span>If you are unfamiliar with the JSON format, see: <a target="_blank" href="https://www.json.org/">https://www.json.org/</a>.</span>
+      </p>
+      <p>
+        <span>ReSearcher uses the Newtonsoft JSON implementation to read and write to this file.</span>
+        <span>For more information on the Newtonsoft JSON implementation, see: <a target="_blank" href="https://www.newtonsoft.com/json">https://www.newtonsoft.com/json</a>.</span>
+      </p>
+      <p>
+        <span>The format for a record is:</span>
+      </p>
+      <div class="example">
+        <div>
+          <code>[</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>{</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>"paths": [</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>
+            <span>    </span>
+            <em>String</em>,</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>
+            <span>    </span>...</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>],</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>"filter": <em>String</em>,</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>"xpath": <em>String</em>,</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>"searchType": <em>String</em>,</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>"pattern": <em>String</em>,</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>
+            <span>    </span>"regexOptions": <em>Number</em></code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>},</code>
+        </div>
+        <div>
+          <code>
+            <span>    </span>...</code>
+        </div>
+        <div>
+          <code>]</code>
+        </div>
+      </div>
+      <p>
+        <span>Where <em>String</em> and <em>Number</em> represent a JSON String and Number respectively.</span>
+      </p>
+      <p>
+        <span>The number for <code>regexOptions</code> is a bitfield representation of the .Net <code>System.Text.RegularExpressions.RegexOptions</code> enumeration (<a target="_blank" href="https://docs.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regexoptions">https://docs.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regexoptions</a>).</span>
+      </p>
+    </div>
+  </body>
+</html>

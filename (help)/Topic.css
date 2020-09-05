@@ -1,0 +1,61 @@
+@media all {
+
+	body {
+		font-family: "Arial", monospace;
+	}
+
+	code {
+		font-family: "Consolas", "Courier New", monospace;
+	}
+
+	table {
+		border-collapse: collapse;
+	}
+
+	th, td {
+		border: thin solid;
+		padding: 1em;
+	}
+
+	th {
+		vertical-align: bottom;
+	}
+
+	td {
+		vertical-align: top;
+	}
+
+	.figure {
+		text-align: center;
+	}
+
+	.caption {
+		font-weight: bold;
+	}
+
+	.section
+	.operation,
+	.information {
+		margin-top: 1em;
+	}
+
+	.note,
+	.caution {
+		margin: 1em;
+		padding: 1em;
+	}
+
+	.note {
+		background-color: #E0FFE0;
+	}
+
+	.caution {
+		background-color: #FFFFE0;
+	}
+
+	.example,
+	.sample {
+		margin: 1em;
+	}
+
+}

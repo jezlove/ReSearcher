@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>PDF viewer</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>PDF viewer</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>The <em>PDF</em> Settings tab is displayed in <a href="#settingsFormWithPdfTabCircledFigure">Figure 1</a> below:</span>
+      </p>
+      <div class="figure" id="settingsFormWithPdfTabCircledFigure">
+        <img class="screenshot" src="ScreenshotOfSettingsFormWithPdfTabCircled.png" />
+        <p class="caption">
+          <span>Figure 1. Settings form with PDF tab (circled)</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="fieldsSection">
+      <h2>
+        <span>Fields</span>
+      </h2>
+      <ul>
+        <li>
+          <p>
+            <span>
+              <em>Open with:</em> specifies the program file location.</span>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span>
+              <em>To file:</em> specifies the argument format pattern for simply opening a file (but allowing for the user to specify additional parameters to be passed).</span>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span>
+              <em>To section in file:</em> specifies the argument format pattern for opening a file to a specific section (page within the PDF file).</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="section" id="defaultsSection">
+      <h2>
+        <span>Defaults</span>
+      </h2>
+      <ul>
+        <li>
+          <p>
+            <span>
+              <em>Open with:</em> ReSearcher checks to see if a known application is installed (and attempts to configure for that application).</span>
+            <span>Otherwise, the field is left blank for the user to enter.</span>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span>
+              <em>To file:</em>
+              <code>"{0}"</code>
+            </span>
+          </p>
+          <p>
+            <span>Where <code>{0}</code> is a placeholder for the file path of the document to be opened.</span>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span>
+              <em>To section in file:</em>
+              <code>"{0}"</code>
+            </span>
+          </p>
+          <p>
+            <span>Where <code>{0}</code> is a placeholder for the file path of the document to be opened.</span>
+          </p>
+          <p>
+            <span>The placeholder <code>{1}</code> (for a page number) is not included unless it is known where in the pattern it is acceptable.</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="section" id="adobeAcrobatReaderDcSection">
+      <h2>
+        <span>Adobe Acrobat Reader DC</span>
+      </h2>
+      <p>
+        <span>TODO</span>
+      </p>
+      <p>
+        <span>The Adobe Acrobat SDK provides the following command-line help (downloadable as a PDF): <a target="_blank" href="https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf">https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf</a> [PDF].</span>
+      </p>
+      <p>
+        <span>The option <code>page=<em>pagenum</em></code> (<a target="_blank" href="https://manual.calibre-ebook.com/generated/en/ebook-viewer.html#cmdoption-ebook-viewer-open-at">https://manual.calibre-ebook.com/generated/en/ebook-viewer.html#cmdoption-ebook-viewer-open-at</a>) can be used to open to a page in the file.</span>
+        <span>The pattern for this would be:</span>
+      </p>
+      <div class="sample">
+        <p>
+          <span>
+            <code>page={1} "{0}"</code>
+          </span>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

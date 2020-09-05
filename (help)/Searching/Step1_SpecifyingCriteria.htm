@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>Step 1. Specifying criteria</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>Step 1. Specifying criteria</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>The Search form is shown in <a href="#searchFormFigure">Figure 1</a> below.</span>
+      </p>
+      <div class="figure" id="searchFormFigure">
+        <img class="screenshot" src="ScreenshotOfSearchForm.png" />
+        <p class="caption">
+          <span>Figure 1. Search form</span>
+        </p>
+      </div>
+    </div>
+    <div class="operation" id="editingPathsAndFilterOperation">
+      <h2>
+        <span>Editing selected paths and selected filter</span>
+      </h2>
+      <p>
+        <span>The input box below the <em>Path(s) and filter:</em> heading (shown in <a href="#searchFormFigure">Figure 1</a>), is for editing the target search files and/or directories to be searched.</span>
+        <span>The drop-down box to the right is for editing the filter to be used for any directories in that list.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> if you choose to make any edits to this list, a single line should be used for each path.</span>
+        </p>
+      </div>
+      <p>
+        <span>Normally, the list of selected paths and selected filter should already be populated prior to the displaying of the this window.</span>
+        <span>This information comes from any selected files and directories being viewed in the active Browse view of the Main form.</span>
+      </p>
+      <p>
+        <span>If no Browse view tab was open then this list will be empty, but can be entered manually on this screen.</span>
+        <span>It is recommended in this case, to cancel and browse for files and directories using the Browse view, see: <a href="../Browsing/Browsing.htm">Browsing</a>.</span>
+      </p>
+    </div>
+    <div class="operation" id="enteringXPathExpressionsOperation">
+      <h2>
+        <span>Entering XPath expressions</span>
+      </h2>
+      <p>
+        <span>The input box below the <em>XPath (within EPUB only):</em> heading (shown in <a href="#searchFormFigure">Figure 1</a>), is specifically for entering XPath expressions only.</span>
+      </p>
+      <p>
+        <span>The XPath expression is used only when searching through EPUB documents, to locate a specific node (part of the document) to search within.</span>
+      </p>
+      <p>
+        <span>For more information about writing XPath expressions, see: <a href="Expressions/XPathExpressions/XPathExpressions.htm">XPath expressions</a>.</span>
+      </p>
+    </div>
+    <div class="operation" id="enteringSimpleBooleanOrRegularExpressionsOperation">
+      <h2>
+        <span>Entering Simple, Boolean, or Regex expressions</span>
+      </h2>
+      <p>
+        <span>The tabs <em>Simple</em>, <em>Boolean</em>, and <em>Regex</em> (shown in <a href="#searchFormFigure">Figure 1</a>) are for entering Simple, Boolean, or Regular expressions respectively.</span>
+        <span>For more information about these different types of expressions, see: <a href="Expressions/Expressions.htm">Expressions</a>.</span>
+      </p>
+      <div class="section" id="regularExpressionOptionsSection">
+        <h3>
+          <span>Regular expression options</span>
+        </h3>
+        <p>
+          <span>Under the <em>Regex</em> tab (for entering regular expressions) there are also additional checkboxes for selecting options that will affect the way that the regular expression matches data.</span>
+          <span>The single character next to them is a common abbreviation for that option that some users might be familiar with.</span>
+        </p>
+        <p>
+          <span>By default, the <em>ignore case</em> and <em>ignore whitespace</em> options are selected.</span>
+        </p>
+        <p>
+          <span>For more information about regular expressions, see: <a href="Expressions/RegularExpressions/RegularExpressions.htm">Regular expressions</a>.</span>
+        </p>
+      </div>
+    </div>
+    <div class="operation" id="searchingOperation">
+      <h2>
+        <span>Searching</span>
+      </h2>
+      <p>
+        <span>When you have finished entering your required search criteria, <strong>click</strong> on the <em>Search...</em> button.</span>
+        <span>This window will close and ReSearcher will begin conducting a new search with this criteria.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> this may take some time to complete.</span>
+        </p>
+      </div>
+      <p>
+        <span>Once ReSearcher has collected all of the results fitting your criteria, the Results view will appear to display this information.</span>
+        <span>Proceed to <a href="Step2_ReviewingResults.htm">Step 2</a>.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> this search will be saved to your Search history.</span>
+          <span>For more information about this, see: <a href="History/History.htm">History</a>.</span>
+        </p>
+      </div>
+    </div>
+    <div class="operation" id="cancellingOperation">
+      <h2>
+        <span>Cancelling</span>
+      </h2>
+      <p>
+        <span>If you would like to cancel: <strong>click</strong> on the <em>Cancel</em> button.</span>
+        <span>This will abandon the search process and close this window.</span>
+      </p>
+    </div>
+    <div class="operation" id="loadingAPastSearchOperation">
+      <h2>
+        <span>Loading a past search</span>
+      </h2>
+      <p>
+        <span>To load a past search into the Search form: <strong>click</strong> the <em>Load...</em> button and the Search history form will appear.</span>
+        <span>See: <a href="History/RetrievingPastSearchCriteria.htm">History, Retrieving past search criteria</a> for more information.</span>
+      </p>
+    </div>
+  </body>
+</html>

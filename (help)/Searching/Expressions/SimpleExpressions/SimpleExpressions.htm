@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>Simple expressions</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>Simple expressions</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>Naturally, simple expressions are the simplest type of search term.</span>
+        <span>They are exact character for character matches, so for example:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <code>dog</code>
+          </p>
+        </div>
+        <p>
+          <span>Matches:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <code>dog</code>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="caseInsensitivitySection">
+      <h2>
+        <span>Case insensitivity</span>
+      </h2>
+      <p>
+        <span>Simple expressions are case insensitive, so:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <code>cat</code>
+          </p>
+        </div>
+        <p>
+          <span>Matches all of:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>cat</code>, <code><strong>C</strong>at</code>, <code>c<strong>A</strong>t</code>, <code><strong>CA</strong>t</code>, <code>ca<strong>T</strong></code>, <code><strong>C</strong>a<strong>T</strong></code>, <code>c<strong>AT</strong></code>, <code><strong>CAT</strong></code></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="wholeWordsOnlySection">
+      <h2>
+        <span>Whole words only</span>
+      </h2>
+      <p>
+        <span>Simple expressions search for whole words only, so:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <code>pet</code>
+          </p>
+        </div>
+        <p>
+          <span>Will not match any of:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>
+                <strong>pet</strong>ulant</code>, <code>car<strong>pet</strong></code>, <code>trum<strong>pet</strong>er</code>, etc.
+					</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="whitespaceSection">
+      <h2>
+        <span>Whitespace</span>
+      </h2>
+      <p>
+        <span>Simple expression searches ignore whitespace (spaces, tabs, line endings, etc.) in both the search expression and within search results.</span>
+        <span>So both:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <code>Guinea pig</code>
+          </p>
+        </div>
+        <p>
+          <span>and</span>
+        </p>
+        <div class="sample">
+          <p>
+            <code>Guinea<u> </u><u> </u><u> </u><u> </u><u> </u>pig</code>
+          </p>
+        </div>
+        <p>
+          <span>Will match both:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>Guinea pig</code> and <code>Guinea<u> </u><u> </u><u> </u><u> </u><u> </u>pig</code></span>
+          </p>
+        </div>
+      </div>
+      <p>
+        <span>Where underlining is used above for illustration of any whitespace.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> not to be confused with the '<code>_</code>' character, see also: <a href="#otherCharactersSection">Other characters</a> below.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="otherCharactersSection">
+      <h2>
+        <span>Other characters</span>
+      </h2>
+      <p>
+        <span>Simple expressions consider letters and digits (of any spoken language) to be part of a word.</span>
+        <span>Also acknowledged are:-</span>
+      </p>
+      <ul>
+        <li>
+          <span>'<code>'</code>' (Unicode/ASCII code <code>39</code> - <em>single-quote/apostrophe</em>)</span>
+        </li>
+        <li>
+          <span>'<code>-</code>' (Unicode/ASCII code <code>45</code> - <em>hyphen/minus/dash</em>)</span>
+        </li>
+        <li>
+          <span>'<code>_</code>' (Unicode/ASCII code <code>95</code> - <em>underscore/understrike/underbar/low-line</em>)</span>
+        </li>
+      </ul>
+      <p>
+        <span>All other characters are ignored.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> for more information about Unicode, check out: <a target="_blank" href="https://www.unicode.org/">https://www.unicode.org/</a>.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="moreExpressivitySection">
+      <h2>
+        <span>More expressivity</span>
+      </h2>
+      <p>
+        <span>For more control over your searches, consider using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../BooleanExpressions/BooleanExpressions.htm">Boolean expressions</a>
+          </span>
+        </li>
+        <li>
+          <span>
+            <a href="../RegularExpressions/RegularExpressions.htm">Regular expressions</a>
+          </span>
+        </li>
+      </ul>
+      <p>
+        <span>If searching within an EPUB document, consider also using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../XPathExpressions/XPathExpressions.htm">XPath expressions</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

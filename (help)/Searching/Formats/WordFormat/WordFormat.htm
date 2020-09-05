@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>Word format</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>Word format</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>'Word format' is a term used by ReSearcher to actually describe two distinct formats:</span>
+      </p>
+      <ul>
+        <li>
+          <p>
+            <span>
+              <strong>Binary format (Word 97–2007)</strong>
+            </span>
+          </p>
+          <p>
+            <span>Most typically with a '.doc' extension (seen less often these days)</span>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span>
+              <strong>WordprocessingML (Office Open XML format)</strong>
+            </span>
+          </p>
+          <p>
+            <span>Most typically with a '.docx' extension</span>
+          </p>
+        </li>
+      </ul>
+      <p>
+        <span>Both formats are developed by Microsoft (although, the latter done with outside collaboration).</span>
+      </p>
+      <p>
+        <span>ReSearcher supports searching within both varieties.</span>
+        <span>However, for the former (.doc) <strong>Microsoft Word must be installed</strong> in order to search them.</span>
+        <span>Whereas, for the latter (.docx) an installation of Microsoft Word is not required.</span>
+      </p>
+    </div>
+    <div class="section" id="formatDescriptionSection">
+      <h2>
+        <span>Format description</span>
+      </h2>
+      <p>
+        <span>Standards have been published for both formats.</span>
+        <span>However, the legacy Binary format is no longer being actively developed.</span>
+      </p>
+      <div class="section" id="binaryFormatSection">
+        <h3>
+          <span>Binary format</span>
+        </h3>
+        <p>
+          <span>A formal description of this standard is available to download as a PDF: <a target="_blank" href="https://download.microsoft.com/download/0/B/E/0BE8BDD7-E5E8-422A-ABFD-4342ED7AD886/Word97-2007BinaryFileFormat(doc)Specification.pdf">https://download.microsoft.com/download/0/B/E/0BE8BDD7-E5E8-422A-ABFD-4342ED7AD886/Word97-2007BinaryFileFormat(doc)Specification.pdf</a> [PDF].</span>
+        </p>
+      </div>
+      <div class="section" id="openOfficeXmlFormatSection">
+        <h3>
+          <span>Office Open XML format</span>
+        </h3>
+        <p>
+          <span>Essentially, an (OOXML) Word document is a Zip archive containing XML files (combined with other supporting files).</span>
+          <span>However, unlike EPUB documents, ReSearcher does not presently support using XPath queries when searching them.</span>
+        </p>
+        <p>
+          <span>For more detailed information, see the ECMA standard: <a target="_blank" href="http://www.ecma-international.org/publications/standards/Ecma-376.htm">http://www.ecma-international.org/publications/standards/Ecma-376.htm</a>.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="viewingSection">
+      <h2>
+        <span>Viewing</span>
+      </h2>
+      <p>
+        <span>For more information on how to configure a viewer for documents of this format, see: <a href="../../../Configuring/Viewers/WordViewer/WordViewer.htm">Configuring, Word viewer</a>.</span>
+      </p>
+    </div>
+  </body>
+</html>

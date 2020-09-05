@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>XPath expressions</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>XPath expressions</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>XPath (or XML Path Language) is a language for querying xml documents.</span>
+        <span>ReSearcher supports EPUB, a popular document format but one which is essentially a Zip archive of XHTML documents (combined with other supporting files).</span>
+        <span>XHTML is a subset of XML, this enables the use of XPath queries to select nodes (parts of) of an XHTML document to search within.</span>
+        <span>The use for this feature would be if you wanted to search only in tables (<code>.//table</code>) or only within headings (<code>.//h1|.//h2|.//h3|.//h4|.//h5|.//h6</code>).</span>
+      </p>
+      <p>
+        <span>Because this is a broad and complicated topic, I will not be elaborating in any greater detail on how to use XPath expressions as it has already been better explained online.</span>
+        <span>See: <a target="_blank" href="https://www.w3schools.com/xml/xpath_intro.asp">https://www.w3schools.com/xml/xpath_intro.asp</a> for a brief introduction to XPath.</span>
+        <span>And also, for more information about XHTML, see: the W3C standard <a target="_blank" href="https://www.w3.org/TR/xhtml1/">https://www.w3.org/TR/xhtml1/</a> or for a brief introduction see: <a target="_blank" href="https://www.w3schools.com/html/html_xhtml.asp">https://www.w3schools.com/html/html_xhtml.asp</a>.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> when browsing external sources for information regarding XPath expressions make sure that you only use constructs that are supported by XPath version 1.0 (and the .Net Framework XPath implementation).</span>
+          <span>See <a href="#dotNetXPathImplementationSection">.Net XPath implementation</a> below for more details.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="dotNetXPathImplementationSection">
+      <h2>
+        <span>.Net XPath implementation</span>
+      </h2>
+      <p>
+        <span>XPath is a format (among many) created by the W3C (World Wide Web Consortium) but different vendors have created implementations of it.</span>
+        <span>ReSearcher uses the XPath version 1.0 implementation provided by the .Net Framework.</span>
+        <span>More information on the specifics of this implementation can be found at: <a target="_blank" href="https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.5/ms256115(v=vs.90)">https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.5/ms256115(v=vs.90)</a>.</span>
+        <span>Additionally, to find out more information about XPath version 1.0, see: <a target="_blank" href="https://www.w3.org/TR/1999/REC-xpath-19991116/">https://www.w3.org/TR/1999/REC-xpath-19991116/</a>.</span>
+        <span>Lastly, to compare XPath version 1.0 to other versions, see: <a target="_blank" href="https://www.w3.org/TR/xpath/">https://www.w3.org/TR/xpath/</a>.</span>
+      </p>
+    </div>
+    <div class="section" id="epubFormatSection">
+      <h2>
+        <span>EPUB format</span>
+      </h2>
+      <p>
+        <span>For more information on the EPUB format, see: <a href="../../Formats/EpubFormat/EpubFormat.htm">EPUB format</a>.</span>
+      </p>
+    </div>
+    <div class="section" id="openOfficeXmlFormatSection">
+      <h2>
+        <span>Word (Office Open XML format)</span>
+      </h2>
+      <p>
+        <span>Another popular document format that uses XML within a Zip archive is Office Open XML, in particularly: Word (WordprocessingML).</span>
+        <span>However, searching with XPath expressions within this format is not presently supported.</span>
+      </p>
+      <p>
+        <span>For more information on the Word format, see: <a href="../../Formats/WordFormat/WordFormat.htm">Word format</a>.</span>
+      </p>
+    </div>
+  </body>
+</html>

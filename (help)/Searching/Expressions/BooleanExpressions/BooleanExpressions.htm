@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN" "">
+<html lang="en-GB">
+  <head>
+    <title>Boolean expressions</title>
+    <link rel="stylesheet" type="text/css" href="Topic.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>
+      <span>Boolean expressions</span>
+    </h1>
+    <div class="introduction">
+      <p>
+        <span>Boolean expressions are very similar to <a href="../SimpleExpressions/SimpleExpressions.htm">Simple expressions</a>, however, they offer some more control over results.</span>
+        <span>This is done by the boolean keywords '<code>AND</code>' and '<code>OR</code>', so:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <span>
+              <code>dog bed</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>and</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>dog <strong>AND</strong> bed</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>Both match:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>dog bed</code>
+            </span>
+          </p>
+        </div>
+      </div>
+      <p>
+        <span>However:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <span>
+              <code>dog <strong>OR</strong> bed</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>Matches either:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>dog</code> or <code>bed</code> (or <code>dog bed</code>, but as two separate matches)</span>
+          </p>
+        </div>
+      </div>
+      <p>
+        <span>This is useful for filtering and finding more results.</span>
+      </p>
+    </div>
+    <div class="section" id="caseInsensitivitySection">
+      <h2>
+        <span>Case insensitivity</span>
+      </h2>
+      <p>
+        <span>Boolean expressions are, for the most part, case insensitive (but not keywords, see <a href="#keywordsAndCaseInsensitivitySection">Keywords and case insensitivity</a> below), so:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <span>
+              <code>cat</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>Matches all of:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>cat</code>, <code><strong>C</strong>at</code>, <code>c<strong>A</strong>t</code>, <code><strong>CA</strong>t</code>, <code>ca<strong>T</strong></code>, <code><strong>C</strong>a<strong>T</strong></code>, <code>c<strong>AT</strong></code>, <code><strong>CAT</strong></code></span>
+          </p>
+        </div>
+      </div>
+      <div class="section" id="keywordsAndCaseInsensitivitySection">
+        <h3>
+          <span>Keywords and case insensitivity</span>
+        </h3>
+        <p>
+          <span>The boolean keywords '<code>AND</code>' and '<code>OR</code>' are case sensitive, so:</span>
+        </p>
+        <div class="example">
+          <div class="sample">
+            <p>
+              <span>
+                <code>cat <strong>and</strong> mouse</code>
+              </span>
+            </p>
+          </div>
+          <p>
+            <span>Matches:</span>
+          </p>
+          <div class="sample">
+            <p>
+              <span>
+                <code>cat <strong>and</strong> mouse</code>
+              </span>
+            </p>
+          </div>
+          <p>
+            <span>But not:</span>
+          </p>
+          <div class="sample">
+            <p>
+              <span>
+                <code>cat mouse</code>
+              </span>
+            </p>
+          </div>
+          <p>
+            <span>Whereas <code>cat <strong>AND</strong> mouse</code> would.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="wholeWordsOnlySection">
+      <h2>
+        <span>Whole words only</span>
+      </h2>
+      <p>
+        <span>Boolean expressions search for whole words only, so:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <span>
+              <code>pet</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>Will not match any of:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>
+                <strong>pet</strong>ulant</code>, <code>car<strong>pet</strong></code>, <code>trum<strong>pet</strong>er</code>, etc.
+					</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="whitespaceSection">
+      <h2>
+        <span>Whitespace</span>
+      </h2>
+      <p>
+        <span>Boolean expression searches ignore whitespace (spaces, tabs, line endings, etc.) in both the search expression and within search results.</span>
+        <span>So both:</span>
+      </p>
+      <div class="example">
+        <div class="sample">
+          <p>
+            <span>
+              <code>Guinea pig</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>and</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>Guinea<u> </u><u> </u><u> </u><u> </u><u> </u>pig</code>
+            </span>
+          </p>
+        </div>
+        <p>
+          <span>Will match both:</span>
+        </p>
+        <div class="sample">
+          <p>
+            <span>
+              <code>Guinea pig</code> and <code>Guinea<u> </u><u> </u><u> </u><u> </u><u> </u>pig</code></span>
+          </p>
+        </div>
+      </div>
+      <p>
+        <span>Where underlining is used above for illustration of any whitespace.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> not to be confused with the '<code>_</code>' character, see also: <a href="#otherCharactersSection">Other characters</a> below.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="otherCharactersSection">
+      <h2>
+        <span>Other characters</span>
+      </h2>
+      <p>
+        <span>Boolean expressions consider letters and digits (of any spoken language) to be part of a word.</span>
+        <span>Also acknowledged are:-</span>
+      </p>
+      <ul>
+        <li>
+          <span>'<code>'</code>' (Unicode/ASCII code <code>39</code> - <em>single-quote/apostrophe</em>)</span>
+        </li>
+        <li>
+          <span>'<code>-</code>' (Unicode/ASCII code <code>45</code> - <em>hyphen/minus/dash</em>)</span>
+        </li>
+        <li>
+          <span>'<code>_</code>' (Unicode/ASCII code <code>95</code> - <em>underscore/understrike/underbar/low-line</em>)</span>
+        </li>
+      </ul>
+      <p>
+        <span>All other characters are ignored.</span>
+      </p>
+      <div class="note">
+        <p>
+          <span>
+            <strong>Note:</strong> for more information about Unicode, check out: <a target="_blank" href="https://www.unicode.org/">https://www.unicode.org/</a>.</span>
+        </p>
+      </div>
+    </div>
+    <div class="section" id="lessExpressivitySection">
+      <h2>
+        <span>Less expressivity</span>
+      </h2>
+      <p>
+        <span>For simpler searches (but with less control), consider using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../SimpleExpressions/SimpleExpressions.htm">Simple expressions</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="section" id="moreExpressivitySection">
+      <h2>
+        <span>More expressivity</span>
+      </h2>
+      <p>
+        <span>For more control over your searches, consider using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../RegularExpressions/RegularExpressions.htm">Regular expressions</a>
+          </span>
+        </li>
+      </ul>
+      <p>
+        <span>If searching within an EPUB document, consider also using/learning about:</span>
+      </p>
+      <ul>
+        <li>
+          <span>
+            <a href="../XPathExpressions/XPathExpressions.htm">XPath expressions</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
