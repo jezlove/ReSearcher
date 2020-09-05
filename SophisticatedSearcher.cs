@@ -31,7 +31,7 @@ namespace ReSearcher {
 
 			protected override EpubEntrySearchResults searchEpubEntry(String entryName, Stream stream) {
 
-				XmlDocument xmlDocument = SgmlDocuments.readHtmlAsXmlDocument(stream);
+				XmlDocument xmlDocument = SgmlDocuments.readHtmlAsXmlDocument(stream); // EPUB uses XHTML not HTML, but let's be forgiving
 				if(null == xmlDocument) {
 					Console.Error.WriteLine("Error: could not parse: {0}", entryName);
 					return(null);

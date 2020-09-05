@@ -50,7 +50,17 @@ namespace ReSearcher {
 
 		private static Configuration tryLoadConfiguration() {
 			try {
-				Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+				ExeConfigurationFileMap exeConfigurationFileMap = new ExeConfigurationFileMap();
+				exeConfigurationFileMap.ExeConfigFilename = configuration.FilePath;
+
+				#if DEBUG
+					Console.WriteLine("Configuration file: {0}", configuration.FilePath);
+				#endif
+
+				configuration = ConfigurationManager.OpenMappedExeConfiguration(exeConfigurationFileMap, ConfigurationUserLevel.None);
+
 				configuration.AppSettings.Settings
 
 					.take("epubViewerProgramFilePath", out epubViewerProgramFilePath, getCommonEpubViewerProgramFilePathOrNull)
@@ -103,7 +113,7 @@ namespace ReSearcher {
 			catch(Exception exception) {
 				// suppress any errors, the program is exiting not much can be done here
 				Console.Error.WriteLine("Error: could not save program settings due to exception: {0}", exception);
-				MessageBoxes.error("Could not save program settings");
+				MessageBoxes.error(String.Format("Could not save program settings due to exception: {0}", exception));
 			}
 		}
 
@@ -129,7 +139,7 @@ namespace ReSearcher {
 				getInstalledProgramFilePathOrNull(@"Microsoft Office\Office16\WINWORD.EXE") ?? // Office 2016
 				getInstalledProgramFilePathOrNull(@"Microsoft Office\Office15\WINWORD.EXE") ?? // Office 2013
 				getInstalledProgramFilePathOrNull(@"Microsoft Office\Office14\WINWORD.EXE") ?? // Office 2010
-				// (no 13)
+				// (there is no 13)
 				getInstalledProgramFilePathOrNull(@"Microsoft Office\Office12\WINWORD.EXE") ?? // Office 2007
 				getInstalledProgramFilePathOrNull(@"Microsoft Office\Office11\WINWORD.EXE") ?? // Office 2003
 				getInstalledProgramFilePathOrNull(@"Microsoft Office\Office10\WINWORD.EXE") ?? // Office XP
@@ -147,9 +157,11 @@ namespace ReSearcher {
 				getInstalledProgramFilePathOrNull(@"Adobe\Acrobat Reader DC\Reader\AcroRd.exe") ??
 				getInstalledProgramFilePathOrNull(@"Adobe\Acrobat Reader DC\Reader\AcroRd32.exe") ??
 
-				// TODO: Foxit, SimplePDF
+				// TODO: Foxit
 
 				getInstalledProgramFilePathOrNull(@"Google\Chrome\Application\chrome.exe") // provides rudimentary viewing capability
+
+				// TODO: Firefox, Edge
 
 			);
 		}

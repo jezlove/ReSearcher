@@ -21,8 +21,11 @@ namespace ReSearcher {
 
 		private SearchDetailsRepository() {
 
-			//listFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "ReSearcher.json");
-			listFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ReSearcher.json");
+			//#if DEBUG
+				//listFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ReSearcher.json");
+			//#else
+				listFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "ReSearcher.json");
+			//#endif
 
 			list = tryLoadList(listFilePath);
 		}
