@@ -121,12 +121,26 @@ namespace ReSearcher.Ou {
 
 		#endregion
 
-		#region hitting
+		#region downloading
 
-			public void downloadFile(Uri uri, String filePath) {
-				Debug.WriteLine("Downloading: {0} to {1}", uri, filePath);
-				cookieAwareWebClient.DownloadFile(uri, filePath);
-				Debug.WriteLine("Downloaded");
+			public Boolean downloadFile(Uri uri, String filePath) {
+				try {
+					Debug.WriteLine("Downloading: {0} to {1}", uri, filePath);
+					{
+						cookieAwareWebClient.DownloadFile(uri, filePath);
+					}
+					Debug.WriteLine("Downloaded");
+					return(true);
+				}
+				catch(WebException webException) {
+					if(HttpStatusCode.NotFound == ((HttpWebResponse)(webException.Response)).StatusCode) {
+						Console.Error.WriteLine("Error 404 (NOT FOUND): ", uri);
+					}
+					else {
+						Console.Error.WriteLine("Error, exception: {0}", webException);
+					}
+					return(false);
+				}
 			}
 
 		#endregion

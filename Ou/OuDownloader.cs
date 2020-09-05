@@ -27,8 +27,8 @@ namespace ReSearcher.Ou {
 			return(ouStudentWebModuleResourceFileFinder.findings.Select(e => new DownloadableResourceFileCollection(e.Key.shortName, e.Value)));
 		}
 
-		public void download(IDownloadableResourceFile downloadableResourceFile, String filePath) {
-			ouSignedInWebSession.downloadFile(downloadableResourceFile.downloadUri, filePath);
+		public Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath) {
+			return(ouSignedInWebSession.downloadFile(downloadableResourceFile.downloadUri, filePath));
 		}
 
 		// ---
