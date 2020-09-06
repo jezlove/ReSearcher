@@ -43,8 +43,6 @@ namespace ReSearcher {
 			MinimizeBox = false;
 			MaximizeBox = false;
 
-			// assemble UI components
-			// extension methods are in use here to provide a fluent and elegant component hierarchy
 			this.appendControls(
 				new TableLayoutPanel() { Dock = DockStyle.Fill, ColumnCount = 2, BackColor = Color.White, Padding = new Padding(8) }.withControls(
 					new Label() { Text = "Username:", TextAlign = ContentAlignment.MiddleRight, Dock = DockStyle.Fill },
@@ -57,7 +55,7 @@ namespace ReSearcher {
 					new ColumnStyle() { SizeType = SizeType.Percent, Width = 70 }
 				).withCellPosition(rememberMeCheckBox, 2, 3),
 				new Panel() { Dock = DockStyle.Bottom, Height = 30, Padding = new Padding(4) }.withControls(
-					messageLabel = new Label() { ForeColor = Color.Red, Dock = DockStyle.Left },
+					messageLabel = new Label() { Dock = DockStyle.Fill },
 					new Button() { Text = "Sign in", Dock = DockStyle.Right, TabIndex = 1 }.withAction(doSignIn),
 					new Button() { Text = "Cancel", DialogResult = DialogResult.Cancel, Dock = DockStyle.Right, TabIndex = 2 }
 				)
@@ -66,15 +64,18 @@ namespace ReSearcher {
 
 		public void doSignIn() {
 			try {
+				messageLabel.ForeColor = Color.Black;
 				messageLabel.Text = "Signing in...";
 				Application.DoEvents();
 				if(trySignIn()) {
 					DialogResult = DialogResult.OK;
 					Close();
 				}
+				messageLabel.ForeColor = Color.Red;
 				messageLabel.Text = "Invalid username or password.";
 			}
-			catch {
+			catch(Exception exception) {
+				Console.Error.WriteLine("Error: exception: {0}", exception);
 				messageLabel.Text = "An error occured.";
 			}
 		}

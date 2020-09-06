@@ -31,8 +31,6 @@ namespace ReSearcher {
 			FormBorderStyle = FormBorderStyle.FixedDialog;
 			ShowInTaskbar = false;
 
-			// assemble UI components
-			// extension methods are in use here to provide a fluent and elegant component hierarchy
 			this.appendControls(
 				logTextBox = new TextBox() { ReadOnly = true, Multiline = true, ScrollBars = ScrollBars.Both, WordWrap = false, Dock = DockStyle.Fill },
 				progressBar = new ProgressBar() { Step = 1, Dock = DockStyle.Bottom, Style = ProgressBarStyle.Marquee, MarqueeAnimationSpeed = 30 },
@@ -59,7 +57,7 @@ namespace ReSearcher {
 		}
 
 		public void stop() {
-			Debug.WriteLine("Stop requested");
+			logTextBoxWriter.WriteLine("Stop requested");
 			backgroundWorker.CancelAsync();
 		}
 
@@ -81,7 +79,7 @@ namespace ReSearcher {
 					break;
 				}
 				else {
-					if(!indefiniteProcessor(logTextBoxWriter)) {
+					if(!indefiniteProcessor(() => backgroundWorker.CancellationPending, logTextBoxWriter)) {
 						doWorkEventArgs.Cancel = true;
 						break;
 					}

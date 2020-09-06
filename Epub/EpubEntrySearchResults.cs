@@ -43,9 +43,13 @@ namespace ReSearcher.Epub {
 						new XAttribute("onclick", String.Format("javascript:requestOpenEpubFileToSection('{0}', '{1}');", title, parent.fileInfo.FullName.Replace('\\', '/'))),
 						new XElement("em", title ?? " ")
 					),
-#if DEBUG
-					new XElement("code", name),
-#endif
+
+					#if DEBUG
+
+						new XElement("code", name),
+
+					#endif
+
 					new XElement("div", (null == matchCollection) ? null : matchCollection.express()),
 					new XElement("ol", branches.expressAll().ToArray())
 				)

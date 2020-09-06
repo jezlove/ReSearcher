@@ -19,7 +19,7 @@ namespace ReSearcher {
 		internal const String csvFilePath = "OuDownloadList.csv";
 
 		public static void downloadFromOuWebsite() {
-			IEnumerable<IDownloadableResourceFileCollection> downloadableResourceFileCollections = OuDownloader.enumerateResourceFileCollections(ProgramSettings.ouUsername, ProgramSettings.ouPassword);
+			IEnumerable<IDownloadableResourceFileCollection> downloadableResourceFileCollections = OuDownloader.enumerateResourceFileCollections(ProgramSettings.ouUsername, ProgramSettings.ouPassword, () => (false), Console.Out);
 			CsvDownloadLists.save(csvFilePath, downloadableResourceFileCollections);
 		}
 

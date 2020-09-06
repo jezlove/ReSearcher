@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Xml;
 using System.Diagnostics;
 
@@ -16,9 +17,13 @@ namespace ReSearcher.Ou {
 		IVisitor {
 
 		protected readonly OuSignedInWebSession ouSignedInWebSession;
+		protected readonly Func<Boolean> cancellationRequestedChecker;
+		protected readonly IndentedWriter log;
 
-		public OuStudentWebModuleVisitor(OuSignedInWebSession ouSignedInWebSession) {
+		public OuStudentWebModuleVisitor(OuSignedInWebSession ouSignedInWebSession, Func<Boolean> cancellationRequestedChecker, TextWriter logTextWriter) {
 			this.ouSignedInWebSession = ouSignedInWebSession;
+			this.cancellationRequestedChecker = cancellationRequestedChecker;
+			this.log = new IndentedWriter(logTextWriter, "  ");
 		}
 
 		#region visiting
@@ -26,6 +31,7 @@ namespace ReSearcher.Ou {
 			private const String ouStudentUriString = "https://msds.open.ac.uk/students/";
 
 			public virtual void visit() {
+				if(cancellationRequestedChecker()) return;
 				XmlDocument xmlDocument = ouSignedInWebSession.get(ouStudentUriString);
 				if(null == xmlDocument) {
 					Console.Error.WriteLine("Error: failed to download: {0}", ouStudentUriString);
@@ -36,6 +42,7 @@ namespace ReSearcher.Ou {
 			}
 
 			public virtual void visit(XmlDocument xmlDocument) {
+				if(cancellationRequestedChecker()) return;
 				OuStudent ouStudent = OuStudent.parse(xmlDocument);
 				if(null == ouStudent) {
 					onCouldNotParseStudentHome();
@@ -45,15 +52,23 @@ namespace ReSearcher.Ou {
 			}
 
 			public virtual void visit(OuStudent ouStudent, XmlDocument xmlDocument) {
+				if(cancellationRequestedChecker()) return;
 				IList<OuStudentModule> ouStudentModules = ouStudent.modules.OrderByDescending(m => m.presentation).ToList();
-				foreach(OuStudentModule ouStudentModule in ouStudentModules) {
-					Debug.WriteLine("Found module: {0}", ouStudentModule);
-				}
-				using(new DebugIndentation()) {
+
+				#if DEBUG
+
+					foreach(OuStudentModule ouStudentModule in ouStudentModules) {
+						Debug.WriteLine("Found module: {0}", ouStudentModule);
+					}
+
+				#endif
+
+				using(new WritingIndentation(log)) {
 					foreach(OuStudentModule ouStudentModule in ouStudentModules) {
 						visitStudentModule(ouStudentModule);
 					}
 				}
+
 			}
 
 			protected virtual void onCouldNotParseStudentHome() {
@@ -67,7 +82,8 @@ namespace ReSearcher.Ou {
 			private const String moduleHomePatternUriString = "https://learn2.open.ac.uk/course/view.php?name={0}";
 
 			protected virtual void visitStudentModule(OuStudentModule ouStudentModule) {
-				Debug.WriteLine("Visiting module: {0}", ouStudentModule);
+				if(cancellationRequestedChecker()) return;
+				log.WriteLine("Inspecting module: {0}", ouStudentModule);
 				String uri = String.Format(moduleHomePatternUriString, ouStudentModule.shortName);
 				XmlDocument xmlDocument = ouSignedInWebSession.get(uri);
 				if(null == xmlDocument) {

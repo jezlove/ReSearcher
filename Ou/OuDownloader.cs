@@ -17,12 +17,12 @@ namespace ReSearcher.Ou {
 
 		private OuSignedInWebSession ouSignedInWebSession;
 
-		public OuDownloader(OuSignedInWebSession ouSignedInWebSession, Boolean dipose = true) {
+		public OuDownloader(OuSignedInWebSession ouSignedInWebSession) {
 			this.ouSignedInWebSession = ouSignedInWebSession;
 		}
 
-		public IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections() {
-			OuStudentWebModuleResourceFileFinder ouStudentWebModuleResourceFileFinder = new OuStudentWebModuleResourceFileFinder(ouSignedInWebSession);
+		public IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections(Func<Boolean> cancellationRequestedChecker, TextWriter logTextWriter) {
+			OuStudentWebModuleResourceFileFinder ouStudentWebModuleResourceFileFinder = new OuStudentWebModuleResourceFileFinder(ouSignedInWebSession, cancellationRequestedChecker, logTextWriter);
 			ouStudentWebModuleResourceFileFinder.visit();
 			return(ouStudentWebModuleResourceFileFinder.findings.Select(e => new DownloadableResourceFileCollection(e.Key.shortName, e.Value)));
 		}
@@ -33,7 +33,7 @@ namespace ReSearcher.Ou {
 
 		// ---
 
-		public static IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections(String studentUsername, String studentPassword) {
+		public static IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections(String studentUsername, String studentPassword, Func<Boolean> cancellationRequestedChecker, TextWriter logTextWriter) {
 			try {
 
 				XmlDocument signedInXmlDocument;
@@ -49,7 +49,7 @@ namespace ReSearcher.Ou {
 
 					OuDownloader ouDownloader = new OuDownloader(ouSignedInWebSession);
 
-					IEnumerable<IDownloadableResourceFileCollection> findings = ouDownloader.enumerateResourceFileCollections();
+					IEnumerable<IDownloadableResourceFileCollection> findings = ouDownloader.enumerateResourceFileCollections(cancellationRequestedChecker, logTextWriter);
 
 					// attempt to sign-out normally:
 

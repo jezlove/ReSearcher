@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Xml;
 using System.Diagnostics;
 
@@ -15,20 +16,21 @@ namespace ReSearcher.Ou {
 	public abstract class OuStudentWebModuleResourceVisitor :
 		OuStudentWebModuleVisitor {
 
-		public OuStudentWebModuleResourceVisitor(OuSignedInWebSession ouSignedInWebSession) :
-			base(ouSignedInWebSession) {
+		public OuStudentWebModuleResourceVisitor(OuSignedInWebSession ouSignedInWebSession, Func<Boolean> cancellationRequestedChecker, TextWriter logTextWriter) :
+			base(ouSignedInWebSession, cancellationRequestedChecker, logTextWriter) {
 		}
 
 		#region visiting-student-modules
 
 			protected override void visitStudentModule(OuStudentModule ouStudentModule, XmlDocument xmlDocument) {
+				if(cancellationRequestedChecker()) return;
 				XmlNode resourcesAXmlNode = xmlDocument.SelectSingleNode(".//a[normalize-space(text())='Resources' and @href]");
 				if(null == resourcesAXmlNode) {
 					onCouldNotLocateResourcesLink(ouStudentModule);
 					return;
 				}
 				String resourcesUri = resourcesAXmlNode.Attributes["href"].Value;
-				using(new DebugIndentation()) {
+				using(new WritingIndentation(log)) {
 					visitStudentModuleResources(ouStudentModule, resourcesUri);
 				}
 			}
@@ -42,7 +44,8 @@ namespace ReSearcher.Ou {
 		#region visiting-student-module-resources
 
 			protected virtual void visitStudentModuleResources(OuStudentModule ouStudentModule, String resourcesUri) {
-				Debug.WriteLine("Visiting module resources");
+				if(cancellationRequestedChecker()) return;
+				log.WriteLine("Inspecting module resources");
 				XmlDocument xmlDocument = ouSignedInWebSession.get(resourcesUri);
 				if(null == xmlDocument) {
 					Console.Error.WriteLine("Error: failed to download: {0}", resourcesUri);
@@ -53,13 +56,14 @@ namespace ReSearcher.Ou {
 			}
 
 			protected virtual void visitStudentModuleResources(OuStudentModule ouStudentModule, XmlDocument xmlDocument) {
+				if(cancellationRequestedChecker()) return;
 				XmlNode downloadsAXmlNode = xmlDocument.SelectSingleNode(".//a[normalize-space(./span/span/span/text())='Downloads' and @href]");
 				if(null == downloadsAXmlNode) {
 					onCouldNotLocateDownloadsLink(ouStudentModule);
 					return;
 				}
 				String downloadsUri = downloadsAXmlNode.Attributes["href"].Value;
-				using(new DebugIndentation()) {
+				using(new WritingIndentation(log)) {
 					visitStudentModuleResourceDownloads(ouStudentModule, downloadsUri);
 				}
 			}
@@ -73,7 +77,8 @@ namespace ReSearcher.Ou {
 		#region visiting-student-module-resource-downloads
 
 			protected virtual void visitStudentModuleResourceDownloads(OuStudentModule ouStudentModule, String downloadsUri) {
-				Debug.WriteLine("Visiting module resource downloads");
+				if(cancellationRequestedChecker()) return;
+				log.WriteLine("Inspecting module resource downloads");
 				XmlDocument xmlDocument = ouSignedInWebSession.get(downloadsUri);
 				if(null == xmlDocument) {
 					Console.Error.WriteLine("Error: failed to download: {0}", downloadsUri);
@@ -91,6 +96,7 @@ namespace ReSearcher.Ou {
 			#region documents
 
 				protected virtual void visitStudentModuleResourceDocumentDownloads(OuStudentModule ouStudentModule, XmlDocument xmlDocument) {
+					if(cancellationRequestedChecker()) return;
 					XmlNode documentDownloadsUlXmlNode = xmlDocument.SelectSingleNode(".//h3[normalize-space(text())='Document downloads']/following-sibling::ul");
 					if(null == documentDownloadsUlXmlNode) {
 						onCouldNotLocateDocumentDownloadsList(ouStudentModule);
@@ -117,6 +123,7 @@ namespace ReSearcher.Ou {
 			#region media
 
 				protected virtual void visitStudentModuleResourceMediaDownloads(OuStudentModule ouStudentModule, XmlDocument xmlDocument) {
+					if(cancellationRequestedChecker()) return;
 					XmlNode mediaDownloadsUlXmlNode = xmlDocument.SelectSingleNode(".//h3[normalize-space(text())='Media downloads']/following-sibling::ul");
 					if(null == mediaDownloadsUlXmlNode) {
 						onCouldNotLocateMediaDownloadsList(ouStudentModule);
@@ -141,8 +148,10 @@ namespace ReSearcher.Ou {
 			#endregion
 
 			protected virtual void visitStudentModuleResourceDownloads(OuStudentModule ouStudentModule, XmlNodeList aXmlNodeList) {
-				using(new DebugIndentation()) {
+				if(cancellationRequestedChecker()) return;
+				using(new WritingIndentation(log)) {
 					foreach(XmlNode aXmlNode in aXmlNodeList) {
+						if(cancellationRequestedChecker()) return;
 						String formatUriString = aXmlNode.Attributes["href"].Value;
 						String formatName = aXmlNode.InnerText.Trim();
 						visitStudentModuleResourceDownloadsInFormat(ouStudentModule, formatName, formatUriString);
@@ -155,7 +164,8 @@ namespace ReSearcher.Ou {
 		#region visiting-student-module-resource-downloads-in-format
 
 			protected virtual void visitStudentModuleResourceDownloadsInFormat(OuStudentModule ouStudentModule, String formatName, String formatUriString) {
-				Debug.WriteLine("Visiting module resource downloads in format: {0}", (Object)(formatName));
+				if(cancellationRequestedChecker()) return;
+				log.WriteLine("Inspecting module resource downloads in format: {0}", (Object)(formatName));
 				XmlDocument xmlDocument = ouSignedInWebSession.get(formatUriString);
 				if(null == xmlDocument) {
 					Console.Error.WriteLine("Error: failed to download: {0}", formatUriString);

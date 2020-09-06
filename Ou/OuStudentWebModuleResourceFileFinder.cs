@@ -18,20 +18,22 @@ namespace ReSearcher.Ou {
 
 		public readonly IDictionary<OuStudentModule, List<IDownloadableResourceFile>> findings = new Dictionary<OuStudentModule, List<IDownloadableResourceFile>>();
 
-		public OuStudentWebModuleResourceFileFinder(OuSignedInWebSession ouSignedInWebSession) :
-			base(ouSignedInWebSession) {
+		public OuStudentWebModuleResourceFileFinder(OuSignedInWebSession ouSignedInWebSession, Func<Boolean> cancellationRequestedChecker, TextWriter logTextWriter) :
+			base(ouSignedInWebSession, cancellationRequestedChecker, logTextWriter) {
 		}
 
 		#region visiting-student-module-resource-downloads-in-format
 
 			protected override void visitStudentModuleResourceDownloadsInFormat(OuStudentModule ouStudentModule, String formatName, XmlDocument xmlDocument) {
+				if(cancellationRequestedChecker()) return;
 				XmlNodeList trXmlNodeList = xmlDocument.SelectNodes(".//table/tbody/tr");
 				if(0 == trXmlNodeList.Count) {
 					onNoFilesAvailable(ouStudentModule, formatName);
 					return;
 				}
-				using(new DebugIndentation()) {
+				using(new WritingIndentation(log)) {
 					foreach(XmlNode trXmlNode in trXmlNodeList) {
+						if(cancellationRequestedChecker()) return;
 						visitStudentModuleResourceDownloadFile(ouStudentModule, formatName, trXmlNode);
 					}
 				}
@@ -46,6 +48,7 @@ namespace ReSearcher.Ou {
 		#region visiting-student-module-resource-download-file
 
 			protected virtual void visitStudentModuleResourceDownloadFile(OuStudentModule ouStudentModule, String formatName, XmlNode trXmlNode) {
+				if(cancellationRequestedChecker()) return;
 				XmlNode uriAXmlNode = trXmlNode.SelectSingleNode("./td[2]//a[@href]");
 				if(null == uriAXmlNode) {
 					Console.Error.WriteLine("Error: link missing");

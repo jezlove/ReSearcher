@@ -21,10 +21,14 @@ namespace ReSearcher {
 				using(StringWriter stringWriter = new StringWriter()) {
 					XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() {
 						OmitXmlDeclaration = true,
-#if DEBUG
-						Indent = true,
-						IndentChars = ("\t"),
-#endif
+
+						#if DEBUG
+
+							Indent = true,
+							IndentChars = ("\t"),
+
+						#endif
+
 					};
 					using(XmlWriter xmlWriter = XmlWriter.Create(stringWriter, xmlWriterSettings)) {
 						xNode.WriteTo(xmlWriter);

@@ -16,6 +16,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -120,47 +121,52 @@ namespace ReSearcher {
 			ISearcher searcher;
 			try {
 
-#if USE_MOCK_SEARCHER
+				#if USE_MOCK_SEARCHER
 
-				searcher = new SleepyMockSearcher(filter);
+					searcher = new SleepyMockSearcher(filter);
 
-#else
+				#else
 
-				if(null == searchCriteria.xpath) {
-					searcher = new UnsophisticatedSearcher(searchCriteria.regex, filter);
-				}
-				else {
-					searcher = new SophisticatedSearcher(searchCriteria.regex, searchCriteria.xpath, filter);
-				}
+					if(null == searchCriteria.xpath) {
+						searcher = new UnsophisticatedSearcher(searchCriteria.regex, filter);
+					}
+					else {
+						searcher = new SophisticatedSearcher(searchCriteria.regex, searchCriteria.xpath, filter);
+					}
 
-#endif
+				#endif
 
 				searchWith(searcher, searchCriteria);
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 
 		internal void searchWith(ISearcher searcher, SearchCriteria searchCriteria) {
 
-			ISearchResult iSearchResult = null;
+			XDocument resultsPageXDocument = null;
+
 			IndefiniteProcessingForm.process(
-				(log) => {
+				(cancellationRequestedChecker, log) => {
 					log.WriteLine("Searching...");
-					iSearchResult = searcher.search(searchCriteria.fileSystemInfos);
+
+					resultsPageXDocument = new [] {
+						searcher.search(searchCriteria.fileSystemInfos, cancellationRequestedChecker, log)
+					}.toXDocument();
+
 					return(false);
 				},
 				"Searching...",
 				this
 			);
-			if(null == iSearchResult) {
+			if(null == resultsPageXDocument) {
 				this.error("An error occured whilst searching.");
 				return;
 			}
 
 			// note: resultsPage has to be constructed in this UI thread
-			ResultsPage resultsPage = new ResultsPage(new [] {iSearchResult});
+			ResultsPage resultsPage = new ResultsPage(resultsPageXDocument);
 
 			tabControl.appendControls(resultsPage);
 			tabControl.SelectedTab = resultsPage;
@@ -181,7 +187,7 @@ namespace ReSearcher {
 				tabControl.SelectedTab = browsePage;
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}			
 		}
 
@@ -192,32 +198,32 @@ namespace ReSearcher {
 				}
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}	
 		}
 
 		public void download() {
 			try {
 
-#if USE_MOCK_DOWNLOADER
+				#if USE_MOCK_DOWNLOADER
 
-				downloadAllNotDownloadedWith(new SleepyMockDownloader(MockDownloadData.load()), ProgramSettings.downloadsDirectoryPath);
+					downloadAllNotDownloadedWith(new SleepyMockDownloader(MockDownloadData.load()), ProgramSettings.downloadsDirectoryPath);
 
-#else
+				#else
 
-				OuSignedInWebSession ouSignedInWebSession = OuSignInForm.signIn(this);
-				if(null == ouSignedInWebSession) {
-					return;
-				}
-				using(ouSignedInWebSession) {
-					downloadAllNotDownloadedWith(new OuDownloader(ouSignedInWebSession), ProgramSettings.downloadsDirectoryPath);
-				}
+					OuSignedInWebSession ouSignedInWebSession = OuSignInForm.signIn(this);
+					if(null == ouSignedInWebSession) {
+						return;
+					}
+					using(ouSignedInWebSession) {
+						downloadAllNotDownloadedWith(new OuDownloader(ouSignedInWebSession), ProgramSettings.downloadsDirectoryPath);
+					}
 
-#endif
+				#endif
 
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}	
 		}
 
@@ -225,12 +231,12 @@ namespace ReSearcher {
 
 			IEnumerable<IDownloadableResourceFileCollection> available = null;
 			IndefiniteProcessingForm.process(
-				(log) => {
+				(cancellationRequestedChecker, log) => {
 					log.WriteLine("Searching for new content...");
 
-					// TODO: re-write enumerateResourceFileCollections to be lazy
+					// TODO: consider re-writing enumerateResourceFileCollections to be lazily consumable, could perhaps avert the need for a cancellation checker?
 
-					available = downloader.enumerateResourceFileCollections();
+					available = downloader.enumerateResourceFileCollections(cancellationRequestedChecker, log);
 					return(false);
 				},
 				"Searching...",
@@ -242,7 +248,7 @@ namespace ReSearcher {
 
 			IEnumerable<KeyValuePair<String, List<IDownloadableResourceFile>>> notDownloaded = available.map().enumerateNotDownloaded(downloadsDirectoryPath);
 			if(!notDownloaded.Any()) {
-				this.inform("All files are up-to-date.", "Downloads");
+				this.inform("All files checked are up-to-date.", "Downloads");
 				return;
 			}
 			IList<Tuple<IDownloadableResourceFile, String>> picks = DownloadPicker.pickDownloads(notDownloaded, this);
@@ -285,7 +291,7 @@ namespace ReSearcher {
 				}
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 
@@ -296,7 +302,7 @@ namespace ReSearcher {
 				}
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 
@@ -309,7 +315,7 @@ namespace ReSearcher {
 				Help.ShowHelp(this, chmFilePath);
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 
@@ -322,7 +328,7 @@ namespace ReSearcher {
 				Help.ShowHelpIndex(this, chmFilePath);
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 
@@ -338,7 +344,7 @@ namespace ReSearcher {
 				Process.Start(processStartInfo);
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 
@@ -351,7 +357,7 @@ namespace ReSearcher {
 				Dispose();
 			}
 			catch(Exception exception) {
-				this.error(String.Format("An error occured, exception: {0}", exception));
+				this.error(exception);
 			}
 		}
 

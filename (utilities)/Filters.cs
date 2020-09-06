@@ -15,11 +15,13 @@ namespace ReSearcher {
 
 		public const String anyEpub = "*.epub";
 
+		public const String anyDoc = "*.doc";
+
 		public const String anyDocx = "*.docx";
 
 		public const String anyPdf = "*.pdf";
 
-		public static String[] all = new [] {any, anyEpub, anyDocx, anyPdf};
+		public static String[] all = new [] {any, anyEpub, anyDoc, anyDocx, anyPdf};
 
 	}
 

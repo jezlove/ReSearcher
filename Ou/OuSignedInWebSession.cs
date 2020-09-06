@@ -31,22 +31,34 @@ namespace ReSearcher.Ou {
 					CookieAwareWebClient cookieAwareWebClient = new CookieAwareWebClient(cookieContainer);
 					cookieAwareWebClient.Headers.withUserAgent(userAgentString);
 					Debug.WriteLine("Attempting sign-in...");
-					xmlDocument = cookieAwareWebClient.postFormDataReturnXmlDocument(
-						signInUriString,
-						new NameValueCollection()
-							.with("username", username)
-							.with("password", password)
-							.with("Proceed1", "Sign in")
-							.with("FromURL", "")
-					);
-					Debug.WriteLine("Cookies collected:");
 					using(new DebugIndentation()) {
-						foreach(Cookie cookie in cookieContainer.GetCookies(signInUri)) {
-							Debug.WriteLine("{0} = {1}", cookie.Name, cookie.Value);
+						xmlDocument = cookieAwareWebClient.postFormDataReturnXmlDocument(
+							signInUriString,
+							new NameValueCollection()
+								.with("username", username)
+								.with("password", password)
+								.with("Proceed1", "Sign in")
+								.with("FromURL", "")
+						);
+						Debug.WriteLine("Cookies collected:");
+						CookieCollection cookieCollection = cookieContainer.GetCookies(signInUri);
+						using(new DebugIndentation()) {
+							foreach(Cookie cookie in cookieCollection) {
+								Debug.WriteLine("{0} = {1}", cookie.Name, cookie.Value);
+							}
+						}
+
+						// SAMS001C = OFromURL=&Selected= seems to indicate failure to sign-in
+
+						if(null == cookieCollection["SAMS001C"]) {
+							Debug.WriteLine("Signed-in!");
+							return(new OuSignedInWebSession(cookieContainer, cookieAwareWebClient));
+						}
+						else {
+							Debug.WriteLine("Sign-in failed!");
+							return(null);
 						}
 					}
-					Debug.WriteLine("Signed-in!");
-					return(new OuSignedInWebSession(cookieContainer, cookieAwareWebClient));
 				}
 				catch(Exception exception) {
 					Console.Error.WriteLine("Error: exception: {0}", exception);
@@ -69,10 +81,12 @@ namespace ReSearcher.Ou {
 				xmlDocument = null;
 				try {
 					Debug.WriteLine("Attempting sign-out...");
-					xmlDocument = cookieAwareWebClient.getXmlDocument(signOutUriString);
-					Debug.WriteLine("Signed-out!");
-					signedOut = true;
-					return(signedOut);
+					using(new DebugIndentation()) {
+						xmlDocument = cookieAwareWebClient.getXmlDocument(signOutUriString);
+						Debug.WriteLine("Signed-out!");
+						signedOut = true;
+						return(signedOut);
+					}
 				}
 				catch(Exception exception) {
 					Console.Error.WriteLine("Error: exception: {0}", exception);
@@ -91,16 +105,20 @@ namespace ReSearcher.Ou {
 
 			public XmlDocument get(String uri) {
 				Debug.WriteLine("Getting: {0}", (Object)(uri));
-				XmlDocument xmlDocument = cookieAwareWebClient.getXmlDocument(uri);
-				Debug.WriteLine("Downloaded");
-				return(xmlDocument);
+				using(new DebugIndentation()) {
+					XmlDocument xmlDocument = cookieAwareWebClient.getXmlDocument(uri);
+					Debug.WriteLine("Downloaded!");
+					return(xmlDocument);
+				}
 			}
 
 			public XmlDocument get(Uri uri) {
 				Debug.WriteLine("Getting: {0}", uri);
-				XmlDocument xmlDocument = cookieAwareWebClient.getXmlDocument(uri);
-				Debug.WriteLine("Downloaded");
-				return(xmlDocument);
+				using(new DebugIndentation()) {
+					XmlDocument xmlDocument = cookieAwareWebClient.getXmlDocument(uri);
+					Debug.WriteLine("Downloaded!");
+					return(xmlDocument);
+				}
 			}
 
 		#endregion
@@ -109,14 +127,16 @@ namespace ReSearcher.Ou {
 
 			public Uri hit(Uri uri) {
 				Debug.WriteLine("Hitting: {0}", uri);
-				cookieAwareWebClient.webRequestMethod = WebRequestMethods.Http.Head;
-				{
-					cookieAwareWebClient.DownloadString(uri);
-					// ignore returned string
+				using(new DebugIndentation()) {
+					cookieAwareWebClient.webRequestMethod = WebRequestMethods.Http.Head;
+					{
+						cookieAwareWebClient.DownloadString(uri);
+						// ignore returned string
+					}
+					cookieAwareWebClient.webRequestMethod = null;
+					Debug.WriteLine("Resolved: {0}", cookieAwareWebClient.responseUri);
+					return(cookieAwareWebClient.responseUri);
 				}
-				cookieAwareWebClient.webRequestMethod = null;
-				Debug.WriteLine("Resolved: {0}", cookieAwareWebClient.responseUri);
-				return(cookieAwareWebClient.responseUri);
 			}
 
 		#endregion
@@ -126,10 +146,10 @@ namespace ReSearcher.Ou {
 			public Boolean downloadFile(Uri uri, String filePath) {
 				try {
 					Debug.WriteLine("Downloading: {0} to {1}", uri, filePath);
-					{
+					using(new DebugIndentation()) {
 						cookieAwareWebClient.DownloadFile(uri, filePath);
+						Debug.WriteLine("Downloaded!");
 					}
-					Debug.WriteLine("Downloaded");
 					return(true);
 				}
 				catch(WebException webException) {

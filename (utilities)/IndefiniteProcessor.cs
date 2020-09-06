@@ -9,6 +9,6 @@ using System.IO;
 
 namespace ReSearcher {
 
-	public delegate Boolean IndefiniteProcessor(TextWriter log);
+	public delegate Boolean IndefiniteProcessor(Func<Boolean> cancellationRequestedChecker, TextWriter log);
 
 }

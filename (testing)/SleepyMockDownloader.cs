@@ -22,9 +22,9 @@ namespace ReSearcher {
 			base(downloadableResourceFileCollections) {
 		}
 
-		public override IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections() {
+		public override IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections(Func<Boolean> cancellationRequestedChecker, TextWriter textWriter) {
 			Thread.Sleep(enumerateDuration);
-			return(base.enumerateResourceFileCollections());
+			return(base.enumerateResourceFileCollections(cancellationRequestedChecker, textWriter));
 		}
 
 		public override Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath) {

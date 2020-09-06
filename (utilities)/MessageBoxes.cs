@@ -25,6 +25,10 @@ namespace ReSearcher {
 				MessageBox.Show(thisIWin32Window, message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
+			public static void error(this IWin32Window thisIWin32Window, Exception exception, String title = "Error") {
+				thisIWin32Window.error(String.Format("An error occured, exception: {0}", exception), title);
+			}
+
 			public static void inform(String message, String title = "Information") {
 				MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}

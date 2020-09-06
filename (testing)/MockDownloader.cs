@@ -21,8 +21,11 @@ namespace ReSearcher {
 			this.downloadableResourceFileCollections = downloadableResourceFileCollections;
 		}
 
-		public virtual IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections() {
-			return(downloadableResourceFileCollections);
+		public virtual IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections(Func<Boolean> cancellationRequestedChecker, TextWriter textWriter) {
+			foreach(IDownloadableResourceFileCollection downloadableResourceFileCollection in downloadableResourceFileCollections) {
+				if(cancellationRequestedChecker()) yield break;
+				yield return(downloadableResourceFileCollection);
+			}
 		}
 
 		public virtual Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath) {

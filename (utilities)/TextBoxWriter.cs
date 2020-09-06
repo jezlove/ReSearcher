@@ -19,15 +19,19 @@ namespace ReSearcher {
     	public TextBoxWriter(TextBox textBox) {
         	this.textBox = textBox;
     	}
+
+    	public override Encoding Encoding {
+        	get { return(Encoding.UTF8); }
+    	}
  
     	public override void Write(Char character) {
         	textBox.AppendText(character.ToString());
     	}
-  
-    	public override Encoding Encoding {
-        	get { return(Encoding.UTF8); }
-    	}
 
+    	public override void Write(String text) {
+        	textBox.AppendText(text);
+    	}
+  
 	}
 
 }

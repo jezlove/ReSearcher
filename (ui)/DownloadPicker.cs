@@ -30,8 +30,6 @@ namespace ReSearcher {
 				(int)(Screen.PrimaryScreen.Bounds.Height * 0.7f)
 			);
 
-			// assemble UI components
-			// extension methods are in use here to provide a fluent and elegant component hierarchy
 			this.appendControls(
 				downloadableResourceFileListView = new DownloadableResourceFileListView() { Dock = DockStyle.Fill, Padding = new Padding(4), Font = font },
 				new Panel() { Dock = DockStyle.Bottom, Height = 30 }.withControls(
