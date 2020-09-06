@@ -12,7 +12,7 @@ namespace ReSearcher {
 
     public interface ISearcher {
 
-		SelectionSearchResults search(IEnumerable<FileSystemInfo> fileSystemInfos);
+		SelectionSearchResults search(IEnumerable<FileSystemInfo> fileSystemInfos, Func<Boolean> cancellationRequestedChecker, TextWriter log);
 
 	}
 

@@ -61,6 +61,9 @@ namespace ReSearcher {
 		#region searching-epub-documents
 
 			protected EpubFileSearchResults searchEpubFile(FileInfo epubFileInfo) {
+
+				log.WriteLine("Searching: {0}", epubFileInfo.FullName);
+
 				using(ZipArchive zipArchive = ZipFile.Open(epubFileInfo.FullName, ZipArchiveMode.Read)) {
 					IEnumerable<EpubEntrySearchResults> epubEntrySearchResults = searchEpubFile(zipArchive);
 					if(epubEntrySearchResults.Any()) {
@@ -103,6 +106,9 @@ namespace ReSearcher {
 			}
 
 			protected WordFileSearchResults searchWordFileUsingOpenXmlApi(FileInfo wordFileInfo) {
+
+				log.WriteLine("Searching: {0}", wordFileInfo.FullName);
+
 				try {
 					using(WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Open(wordFileInfo.FullName, isEditable: false)) {
 						using(StreamReader streamReader = new StreamReader(wordprocessingDocument.MainDocumentPart.GetStream())) {
@@ -134,13 +140,15 @@ namespace ReSearcher {
 					return(null);
 				}
 
+				log.WriteLine("Searching: {0}", wordFileInfo.FullName);
+
 				Object missing = System.Reflection.Missing.Value;
 				Wd.Application wordApplication = null;
 				Wd.Document wordDocument = null;
 				try {
 					wordApplication = new Wd.Application() {
 						Visible = false,
-						ShowAnimation = false,
+						//ShowAnimation = false,//causes AuthorizationException
 						DisplayAlerts = Wd.WdAlertLevel.wdAlertsNone
 					};
 					wordDocument = wordApplication.Documents.Open(wordFileInfo.FullName, ReadOnly: true);
@@ -172,11 +180,20 @@ namespace ReSearcher {
 		#region searching-pdf-documents
 
 			protected PdfFileSearchResults searchPdfFile(FileInfo pdfFileInfo) {
-				IList<Tuple<int, MatchCollection>> matchCollections = searchPdfFileByPage(pdfFileInfo).ToList();
-				if(0 == matchCollections.Count) {
+
+				log.WriteLine("Searching: {0}", pdfFileInfo.FullName);
+
+				try {
+					IList<Tuple<int, MatchCollection>> matchCollections = searchPdfFileByPage(pdfFileInfo).ToList();
+					if(0 == matchCollections.Count) {
+						return(null);
+					}
+					return(new PdfFileSearchResults(pdfFileInfo, matchCollections.Select(t => new PdfPageSearchResults(t.Item1, new RegexSearchResultMatchCollection(t.Item2))).ToArray()));
+				}
+				catch(Exception exception) {
+					Console.Error.WriteLine("Error: exception: {0}", exception);
 					return(null);
 				}
-				return(new PdfFileSearchResults(pdfFileInfo, matchCollections.Select(t => new PdfPageSearchResults(t.Item1, new RegexSearchResultMatchCollection(t.Item2))).ToArray()));
 			}
 
 			protected IEnumerable<Tuple<int, MatchCollection>> searchPdfFileByPage(FileInfo pdfFileInfo) {

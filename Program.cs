@@ -23,23 +23,9 @@ namespace ReSearcher {
 
 				Application.EnableVisualStyles();
 
-//Experiments.saveResourceList();
-//Experiments.listCollisions();
-//Experiments.listExtensions();
-//Experiments.listNotExtensioned();
-//Experiments.mockDownloadAll();
-//Experiments.listNotDownloaded();
-//Experiments.mockDownloadAllNotDownloaded();
-//Experiments.listNotDownloaded();
-//Experiments.downloadAllNotDownloaded();
-//Experiments.findDownloadsThatAreMarkup();
-
-
-/**/
 				using(MainForm mainForm = new MainForm()) {
 					Application.Run(mainForm);
 				}
-//*/
 
 				#if DEBUG
 					Debug.Listeners.Remove(consoleTraceListener);

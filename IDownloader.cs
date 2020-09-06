@@ -12,9 +12,15 @@ namespace ReSearcher {
 
     public interface IDownloader {
 
-		IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections();
+		IEnumerable<IDownloadableResourceFileCollection> enumerateResourceFileCollections(
+			Func<Boolean> cancellationRequestedChecker,
+			TextWriter textWriter
+		);
 
-		Boolean download(IDownloadableResourceFile downloadableResourceFile, String filePath);
+		Boolean download(
+			IDownloadableResourceFile downloadableResourceFile,
+			String filePath
+		);
 
 	}
 

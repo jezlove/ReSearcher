@@ -22,7 +22,14 @@ namespace ReSearcher {
 
 		#region searching-file-system
 
-			public SelectionSearchResults search(IEnumerable<FileSystemInfo> fileSystemInfos) {
+			protected Func<Boolean> cancellationRequestedChecker;
+			protected TextWriter log;
+
+			public SelectionSearchResults search(IEnumerable<FileSystemInfo> fileSystemInfos, Func<Boolean> cancellationRequestedChecker, TextWriter log) {
+
+				this.cancellationRequestedChecker = cancellationRequestedChecker;
+				this.log = log;
+
 				return(new SelectionSearchResults(searchItems(fileSystemInfos)));
 			}
 
@@ -36,6 +43,9 @@ namespace ReSearcher {
 			}
 
 			protected ISearchResultBranch searchItem(FileSystemInfo fileSystemInfo) {
+
+				if(cancellationRequestedChecker()) return(null);
+
 				FileInfo fileInfo = fileSystemInfo as FileInfo;
 				if(null != fileInfo) {
 					return(searchFile(fileInfo));
