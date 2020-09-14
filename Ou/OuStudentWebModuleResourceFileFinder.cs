@@ -51,23 +51,23 @@ namespace ReSearcher.Ou {
 				if(cancellationRequestedChecker()) return;
 				XmlNode uriAXmlNode = trXmlNode.SelectSingleNode("./td[2]//a[@href]");
 				if(null == uriAXmlNode) {
-					Console.Error.WriteLine("Error: link missing");
+					log.WriteLine("Error: link missing");
 					return;
 				}
 				String name = uriAXmlNode.InnerText.Trim();
 				if(String.IsNullOrWhiteSpace(name)) {
-					Console.Error.WriteLine("Error: name missing");
+					log.WriteLine("Error: name missing");
 					return;
 				}
 				XmlNode sizeTdXmlNode = trXmlNode.SelectSingleNode("./td[3]");
 				String sizeString = (null == sizeTdXmlNode) ? null : sizeTdXmlNode.InnerText.Trim();
 				if(String.IsNullOrWhiteSpace(sizeString)) {
-					Console.Error.WriteLine("Error: size missing");
+					log.WriteLine("Error: size missing");
 					return;
 				}
 				long size;
 				if(!SiByteMultiples.tryParse(sizeString, out size)) {
-					Console.Error.WriteLine("Error: size invalid");
+					log.WriteLine("Error: size invalid");
 					return;
 				}
 				XmlNode locationTdXmlNode = trXmlNode.SelectSingleNode("./td[4]");

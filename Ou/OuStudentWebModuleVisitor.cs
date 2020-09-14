@@ -32,13 +32,18 @@ namespace ReSearcher.Ou {
 
 			public virtual void visit() {
 				if(cancellationRequestedChecker()) return;
-				XmlDocument xmlDocument = ouSignedInWebSession.get(ouStudentUriString);
-				if(null == xmlDocument) {
-					Console.Error.WriteLine("Error: failed to download: {0}", ouStudentUriString);
-					return;
+				try {
+					XmlDocument xmlDocument = ouSignedInWebSession.get(ouStudentUriString);
+					if(null == xmlDocument) {
+						log.WriteLine("Error: failed to download: {0}", ouStudentUriString);
+						return;
+					}
+					xmlDocument.preserve("OuStudent.xml");
+					visit(xmlDocument);
 				}
-				xmlDocument.preserve("OuStudent.xml");
-				visit(xmlDocument);
+				catch(Exception exception) {
+					log.WriteLine("Unable to access: {0}, exception: {1}", ouStudentUriString, exception);
+				}
 			}
 
 			public virtual void visit(XmlDocument xmlDocument) {
@@ -72,7 +77,7 @@ namespace ReSearcher.Ou {
 			}
 
 			protected virtual void onCouldNotParseStudentHome() {
-				Console.Error.WriteLine("Error: could not parse student home");
+				log.WriteLine("Error: could not parse student home");
 			}
 
 		#endregion
@@ -85,13 +90,18 @@ namespace ReSearcher.Ou {
 				if(cancellationRequestedChecker()) return;
 				log.WriteLine("Inspecting module: {0}", ouStudentModule);
 				String uri = String.Format(moduleHomePatternUriString, ouStudentModule.shortName);
-				XmlDocument xmlDocument = ouSignedInWebSession.get(uri);
-				if(null == xmlDocument) {
-					Console.Error.WriteLine("Error: failed to download: {0}", uri);
-					return;
+				try {
+					XmlDocument xmlDocument = ouSignedInWebSession.get(uri);
+					if(null == xmlDocument) {
+						log.WriteLine("Error: failed to download: {0}", uri);
+						return;
+					}
+					xmlDocument.preserve(ouStudentModule.name + ".xml");
+					visitStudentModule(ouStudentModule, xmlDocument);
 				}
-				xmlDocument.preserve(ouStudentModule.name + ".xml");
-				visitStudentModule(ouStudentModule, xmlDocument);
+				catch(Exception exception) {
+					log.WriteLine("Unable to access module: {0}, exception: {1}", ouStudentModule.shortName, exception);
+				}
 			}
 
 			protected abstract void visitStudentModule(OuStudentModule ouStudentModule, XmlDocument xmlDocument);

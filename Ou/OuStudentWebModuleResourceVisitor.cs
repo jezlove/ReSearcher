@@ -36,7 +36,7 @@ namespace ReSearcher.Ou {
 			}
 
 			protected virtual void onCouldNotLocateResourcesLink(OuStudentModule ouStudentModule) {
-				Console.Error.WriteLine("Error: could not locate 'Resources' link");
+				log.WriteLine("Error: could not locate 'Resources' link");
 			}
 
 		#endregion
@@ -48,7 +48,7 @@ namespace ReSearcher.Ou {
 				log.WriteLine("Inspecting module resources");
 				XmlDocument xmlDocument = ouSignedInWebSession.get(resourcesUri);
 				if(null == xmlDocument) {
-					Console.Error.WriteLine("Error: failed to download: {0}", resourcesUri);
+					log.WriteLine("Error: failed to download: {0}", resourcesUri);
 					return;
 				}
 				xmlDocument.preserve(ouStudentModule.name + "_resources.xml");
@@ -69,7 +69,7 @@ namespace ReSearcher.Ou {
 			}
 
 			protected virtual void onCouldNotLocateDownloadsLink(OuStudentModule ouStudentModule) {
-				Console.Error.WriteLine("Error: could not locate 'Downloads' link");
+				log.WriteLine("Error: could not locate 'Downloads' link");
 			}
 
 		#endregion
@@ -81,7 +81,7 @@ namespace ReSearcher.Ou {
 				log.WriteLine("Inspecting module resource downloads");
 				XmlDocument xmlDocument = ouSignedInWebSession.get(downloadsUri);
 				if(null == xmlDocument) {
-					Console.Error.WriteLine("Error: failed to download: {0}", downloadsUri);
+					log.WriteLine("Error: failed to download: {0}", downloadsUri);
 					return;
 				}
 				xmlDocument.preserve(ouStudentModule.name + "_resource_downloads.xml");
@@ -111,7 +111,7 @@ namespace ReSearcher.Ou {
 				}
 
 				protected virtual void onCouldNotLocateDocumentDownloadsList(OuStudentModule ouStudentModule) {
-					Console.Error.WriteLine("Warning: could not locate 'Document downloads' format list");
+					log.WriteLine("Warning: could not locate 'Document downloads' format list");
 				}
 
 				protected virtual void onNoDocumentFormatsAvailable(OuStudentModule ouStudentModule) {
@@ -138,7 +138,7 @@ namespace ReSearcher.Ou {
 				}
 
 				protected virtual void onCouldNotLocateMediaDownloadsList(OuStudentModule ouStudentModule) {
-					Console.Error.WriteLine("Warning: could not locate 'Media downloads' format list");
+					log.WriteLine("Warning: could not locate 'Media downloads' format list");
 				}
 
 				protected virtual void onNoMediaFormatsAvailable(OuStudentModule ouStudentModule) {
@@ -168,7 +168,7 @@ namespace ReSearcher.Ou {
 				log.WriteLine("Inspecting module resource downloads in format: {0}", (Object)(formatName));
 				XmlDocument xmlDocument = ouSignedInWebSession.get(formatUriString);
 				if(null == xmlDocument) {
-					Console.Error.WriteLine("Error: failed to download: {0}", formatUriString);
+					log.WriteLine("Error: failed to download: {0}", formatUriString);
 					return;
 				}
 				xmlDocument.preserve(ouStudentModule.name + "_resource_downloads_in_" + formatName + ".xml");
